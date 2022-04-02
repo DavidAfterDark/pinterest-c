@@ -1,4 +1,4 @@
-package com.pinteresc.newarchitecture;
+package com.hanktech.pinterest.c.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.pinteresc.BuildConfig;
-import com.pinteresc.newarchitecture.components.MainComponentsRegistry;
-import com.pinteresc.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.hanktech.pinterest.c.BuildConfig;
+import com.hanktech.pinterest.c.newarchitecture.components.MainComponentsRegistry;
+import com.hanktech.pinterest.c.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

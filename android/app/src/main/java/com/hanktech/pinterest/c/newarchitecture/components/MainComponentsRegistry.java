@@ -1,4 +1,4 @@
-package com.pinteresc.newarchitecture.components;
+package com.hanktech.pinterest.c.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -1,4 +1,4 @@
-package com.pinteresc.newarchitecture.modules;
+package com.hanktech.pinterest.c.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
