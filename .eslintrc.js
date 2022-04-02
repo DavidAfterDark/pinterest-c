@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'no-use-before-define': 'off'
+    'no-use-before-define': 'off',
+    'react/prop-types': 'off'
   }
 }
