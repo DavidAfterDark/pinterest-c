@@ -35,23 +35,27 @@ const HomeTabs = () => {
 const HomeScreen = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name='Home'
-        component={Home}
-        options={() => ({
-          header: () => null
-        })}
-      />
+      <Stack.Group screenOptions={{
+        animation: 'slide_from_right'
+      }}>
+        <Stack.Screen
+          name='Home'
+          component={Home}
+          options={() => ({
+            header: () => null
+          })}
+        />
 
-      <Stack.Screen
-        name='Pin'
-        component={Pin}
-        options={() => ({
-          title: '',
-          headerTransparent: true,
-          headerBackVisible: true
-        })}
-      />
+        <Stack.Screen
+          name='Pin'
+          component={Pin}
+          options={() => ({
+            title: '',
+            headerTransparent: true,
+            headerBackVisible: true
+          })}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   )
 }
