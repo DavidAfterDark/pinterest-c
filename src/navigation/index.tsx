@@ -7,8 +7,6 @@ import HomeTabs from './HomeTabs'
 const Navigation = () => {
   const scheme = useColorScheme()
 
-  console.log(scheme)
-
   return (
     <>
       <StatusBar backgroundColor={scheme === 'dark' ? 'black' : 'white'} />
