@@ -7,13 +7,15 @@ import { useTheme } from '@react-navigation/native'
 import IconHeart from '../Svg/IconHeart'
 
 interface PinProps {
-  image: string,
-  title: string,
-  onPressImage: PressableProps['onPress'],
-  onPressHeart: PressableProps['onPress'],
+  pin: {
+    image: string,
+    title: string,
+    onPressImage?: PressableProps['onPress'],
+    onPressHeart?: PressableProps['onPress'],
+  }
 }
 
-const Pin = ({ image, title, onPressImage, onPressHeart }: PinProps) => {
+const Pin = ({ pin }: PinProps) => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
 
   const [ratio, setRatio] = useState<number>(1)
@@ -21,26 +23,26 @@ const Pin = ({ image, title, onPressImage, onPressHeart }: PinProps) => {
   const theme = useTheme()
 
   useEffect(() => {
-    if (image) {
-      Image.getSize(image, (width, height) => setRatio(width / height))
+    if (pin.image) {
+      Image.getSize(pin.image, (width, height) => setRatio(width / height))
     }
-  }, [image])
+  }, [pin.image])
 
   return (
-    <Pressable style={styles.container} onPress={onPressImage}>
+    <Pressable style={styles.container} onPress={() => console.log('press image')}>
       <View style={styles.imageContainer}>
         {loadingImage && <ActivityIndicator style={styles.activityIndicator} size={35} />}
         <FastImage
-          source={{ uri: image }}
+          source={{ uri: pin.image }}
           style={[styles.image, { aspectRatio: ratio }]}
           onLoadStart={() => setLoadingImage(true)}
           onLoad={() => setLoadingImage(false)}
         />
-        <Pressable style={styles.heartContainer} onPress={onPressHeart}>
+        <Pressable style={styles.heartContainer} onPress={() => console.log('press heart')}>
           <IconHeart fill='transparent' stroke={theme.colors.text} size={25} />
         </Pressable>
       </View>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{pin.title}</Text>
     </Pressable>
   )
 }
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
 
   image: {
     width: '100%',
-    borderRadius: 25
+    borderRadius: 15
   },
 
   heartContainer: {
@@ -80,10 +82,11 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 12,
+    fontSize: 16,
+    lineHeight: 22,
     fontFamily: 'Inter-Medium',
-    margin: 10,
     color: '#fff',
+    marginTop: 5,
     marginBottom: 25
   }
 })
