@@ -2,13 +2,17 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useRoute } from '@react-navigation/native'
 
 //  dummy data
 import pins from '../../assets/dummy-data/pins'
 
 const Pin = () => {
-  const pin = pins[1]
+  const route = useRoute()
+
+  const pinID = route?.params?.id
+
+  const pin = pins.find((pin) => pin.id === pinID)
 
   const theme = useTheme()
 

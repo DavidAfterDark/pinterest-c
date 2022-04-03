@@ -8,6 +8,7 @@ import IconHeart from '../Svg/IconHeart'
 
 interface PinProps {
   pin: {
+    id: string,
     image: string,
     title: string,
     onPressImage?: PressableProps['onPress'],
@@ -31,7 +32,7 @@ const Pin = ({ pin }: PinProps) => {
   }, [pin.image])
 
   const goToPinScreen = () => {
-    navigation.navigate('Pin')
+    navigation.navigate('Pin', { id: pin.id })
   }
 
   return (
