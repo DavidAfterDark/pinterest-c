@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ActivityIndicator, Pressable, PressableProps, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useNavigation } from '@react-navigation/native'
 
 //  icons
 import IconHeart from '../Svg/IconHeart'
@@ -22,14 +22,20 @@ const Pin = ({ pin }: PinProps) => {
 
   const theme = useTheme()
 
+  const navigation = useNavigation()
+
   useEffect(() => {
     if (pin.image) {
       Image.getSize(pin.image, (width, height) => setRatio(width / height))
     }
   }, [pin.image])
 
+  const goToPinScreen = () => {
+    navigation.navigate('Pin')
+  }
+
   return (
-    <Pressable style={styles.container} onPress={() => console.log('press image')}>
+    <Pressable style={styles.container} onPress={goToPinScreen}>
       <View style={styles.imageContainer}>
         {loadingImage && <ActivityIndicator style={styles.activityIndicator} size={35} />}
         <FastImage
@@ -59,7 +65,6 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     width: '100%',
-    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center'
   },
