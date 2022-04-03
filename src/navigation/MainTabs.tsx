@@ -13,7 +13,7 @@ import Pin from '../screens/Pin'
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-const HomeTabs = () => {
+const MainTabs = () => {
   const theme = useTheme()
 
   return (
@@ -60,4 +60,4 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeTabs
+export default MainTabs
