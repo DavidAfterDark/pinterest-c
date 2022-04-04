@@ -11,12 +11,15 @@ interface PinProps {
     id: string,
     image: string,
     title: string,
-    onPressImage?: PressableProps['onPress'],
-    onPressHeart?: PressableProps['onPress'],
-  }
+  },
+  onPressFavoriteButton?: PressableProps['onPress'],
+ /**
+ * default: false
+ */
+  favoritesButton?: boolean
 }
 
-const Pin = ({ pin }: PinProps) => {
+const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
 
   const [ratio, setRatio] = useState<number>(1)
@@ -45,9 +48,11 @@ const Pin = ({ pin }: PinProps) => {
           onLoadStart={() => setLoadingImage(true)}
           onLoad={() => setLoadingImage(false)}
         />
-        <Pressable style={styles.heartContainer} onPress={() => console.log('press heart')}>
-          <IconHeart fill='transparent' stroke={theme.colors.text} size={25} />
-        </Pressable>
+        {favoritesButton && (
+          <Pressable style={styles.heartContainer} onPress={onPressFavoriteButton}>
+            <IconHeart fill='transparent' stroke={theme.colors.text} size={25} />
+          </Pressable>
+        )}
       </View>
         <Text style={styles.title}>{pin.title}</Text>
     </Pressable>
@@ -88,9 +93,9 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    fontFamily: 'Inter-Medium',
     fontSize: 16,
     lineHeight: 22,
-    fontFamily: 'Inter-Medium',
     color: '#fff',
     marginTop: 5,
     marginBottom: 25
