@@ -4,7 +4,8 @@ export const Default = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    text: '#000001'
+    text: '#000',
+    background: '#fff'
   }
 }
 
@@ -12,6 +13,8 @@ export const Dark = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    text: '#fffffe'
+    text: '#fff',
+    background: '#000'
+
   }
 }

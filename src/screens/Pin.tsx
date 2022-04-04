@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, StatusBar } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -23,26 +23,29 @@ const Pin = () => {
   }, [])
 
   return (
-    <SafeAreaView style={styles.root}>
-      <ScrollView>
-        <View style={styles.cardContainer}>
-          <FastImage source={{ uri: pin.image }} style={[styles.image, { aspectRatio: ratio }]} />
-          <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <StatusBar backgroundColor='black' barStyle='light-content' />
+      <SafeAreaView style={styles.scrollView}>
+        <ScrollView>
+          <View style={[styles.cardContainer, { backgroundColor: theme.dark ? '#292827' : 'white' }]}>
+            <FastImage source={{ uri: pin.image }} style={[styles.image, { aspectRatio: ratio }]} />
+            <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  root: {
-
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'black'
   },
 
   cardContainer: {
     borderRadius: 35,
-    overflow: 'hidden',
-    backgroundColor: '#292827'
+    overflow: 'hidden'
   },
 
   image: {

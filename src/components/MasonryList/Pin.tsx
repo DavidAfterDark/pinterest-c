@@ -50,11 +50,11 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
         />
         {favoritesButton && (
           <Pressable style={styles.heartContainer} onPress={onPressFavoriteButton}>
-            <IconHeart fill='transparent' stroke={theme.colors.text} size={25} />
+            <IconHeart fill='transparent' stroke='white' size={25} />
           </Pressable>
         )}
       </View>
-        <Text style={styles.title}>{pin.title}</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>
     </Pressable>
   )
 }

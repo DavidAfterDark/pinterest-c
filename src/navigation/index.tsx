@@ -10,7 +10,10 @@ const Navigation = () => {
 
   return (
     <SafeAreaProvider>
-      <StatusBar backgroundColor={scheme === 'dark' ? 'black' : 'white'} />
+      <StatusBar
+        backgroundColor={scheme === 'dark' ? 'black' : 'white'}
+        barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+      />
       <NavigationContainer theme={scheme === 'dark' ? Dark : Default}>
         <MainStack />
       </NavigationContainer>

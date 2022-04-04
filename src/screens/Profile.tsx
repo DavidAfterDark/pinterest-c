@@ -15,8 +15,8 @@ const Profile = () => {
   const theme = useTheme()
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={[styles.container, { backgroundColor: theme.dark ? 'black' : 'white' }]}>
         <View style={styles.header}>
           <View style={styles.imageContainer}>
             {loadingImage && <ActivityIndicator style={styles.activityIndicator} size={35} />}
@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 1,
     backgroundColor: 'gray',
-    marginVertical: 20
+    marginVertical: 20,
+    alignSelf: 'center'
   },
 
   unorganizedIdeas: {

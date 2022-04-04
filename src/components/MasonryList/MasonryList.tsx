@@ -12,7 +12,7 @@ interface MasonryListProps {
 
 const MasonryList = ({ data, favoritesButton = false, onPressFavoriteButton }: MasonryListProps) => {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.column}>
           {data.filter((_item, index) => index % 2 === 0).map((pin) => <Pin key={pin.id} pin={pin} favoritesButton={favoritesButton} onPressFavoriteButton={onPressFavoriteButton} />)}
