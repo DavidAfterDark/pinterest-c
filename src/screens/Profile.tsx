@@ -33,7 +33,7 @@ const Profile = () => {
 
           <View style={styles.followersContainer}>
             <Text style={[styles.followers, { color: theme.colors.text }]}>101 Seguidores</Text>
-            <Text style={[styles.followers, { color: theme.colors.text }]}>  ·  </Text>
+            <Text style={[styles.followers, { color: theme.colors.text }]}>  |  </Text>
             <Text style={[styles.followers, { color: theme.colors.text }]}>150 Seguidos</Text>
           </View>
         </View>
