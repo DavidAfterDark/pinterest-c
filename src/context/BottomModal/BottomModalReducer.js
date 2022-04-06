@@ -1,6 +1,6 @@
-import { SET_VISIBLE } from '../types'
+import { SET_VISIBLE } from '../../types/Actions'
 
-const ModalAddReducer = (state, action) => {
+const BottomModalReducer = (state, action) => {
   const { payload, type } = action
 
   switch (type) {
@@ -15,4 +15,4 @@ const ModalAddReducer = (state, action) => {
   }
 }
 
-export default ModalAddReducer
+export default BottomModalReducer
