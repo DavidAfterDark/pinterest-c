@@ -1,13 +1,8 @@
 import * as React from 'react'
-import Svg, { SvgProps, Path } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+import { IconSvgProps } from '../../types/svgProps'
 
-interface IconHeartProps {
-  fill?: SvgProps['fill'],
-  stroke?: SvgProps['stroke'],
-  size?: number,
-}
-
-const IconHeart = ({ fill = 'red', stroke = 'white', size = 24 }: IconHeartProps) => (
+const IconHeart = ({ fill = 'red', stroke = 'white', size = 24 }: IconSvgProps) => (
   <Svg
     width={size}
     height={size}

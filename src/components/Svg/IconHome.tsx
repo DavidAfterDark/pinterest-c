@@ -1,13 +1,9 @@
 import * as React from 'react'
-import Svg, { SvgProps, Path } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
 import { View } from 'react-native'
+import { IconSvgProps } from '../../types/svgProps'
 
-interface IconHomeProps {
-  color?: SvgProps['fill'],
-  size?: number,
-}
-
-const IconHome = ({ color = 'red', size = 24 }: IconHomeProps) => {
+const IconHome = ({ color = 'red', size = 24 }: IconSvgProps) => {
   return (
     <>
       <Svg

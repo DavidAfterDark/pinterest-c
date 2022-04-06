@@ -1,12 +1,8 @@
 import * as React from 'react'
-import Svg, { SvgProps, Path } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+import { IconSvgProps } from '../../types/svgProps'
 
-interface IconEllipsisProps {
-  color?: SvgProps['color'];
-  size?: number
-}
-
-const IconEllipsis = ({ color = 'red', size }: IconEllipsisProps) => (
+const IconEllipsis = ({ color = 'red', size }: IconSvgProps) => (
   <Svg
     width={size || 24}
     height={size || 24}

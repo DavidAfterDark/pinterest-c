@@ -1,12 +1,8 @@
 import * as React from 'react'
-import Svg, { SvgProps, Path } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+import { IconSvgProps } from '../../types/svgProps'
 
-interface IconShareIosProps {
-  size?: number,
-  color?: SvgProps['color']
-}
-
-const IconShareIos = ({ size, color = 'red' }: IconShareIosProps) => (
+const IconShareIos = ({ size, color = 'red' }: IconSvgProps) => (
   <Svg
     width={size || 24}
     height={size || 24}
