@@ -12,6 +12,7 @@ export type TabParamList = {
   Profile: { userId: string };
 }
 
+//  pin screen
 export type PinScreenProps = NativeStackScreenProps<MainStackParamList, 'Pin'>
-
+export type PinScrenNavigationProps = PinScreenProps['navigation']
 export type PinScreenRouteProps = PinScreenProps['route']

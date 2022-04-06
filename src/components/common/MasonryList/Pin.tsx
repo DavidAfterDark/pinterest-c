@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ActivityIndicator, Pressable, PressableProps, I
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { useTheme, useNavigation } from '@react-navigation/native'
+import { PinScrenNavigationProps } from '../../../types/NavigationProps'
 
 //  icons
 import IconHeart from '../../Svg/IconHeart'
@@ -26,7 +27,7 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
 
   const theme = useTheme()
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<PinScrenNavigationProps>()
 
   useEffect(() => {
     if (pin.image) {
