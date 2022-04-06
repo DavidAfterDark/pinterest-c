@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import { View, Platform, Pressable } from 'react-native'
-import { useTheme, NavigatorScreenParams } from '@react-navigation/native'
+import { useTheme } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ModalAddContext from '../context/ModalAdd/ModalAddContext'
+import { MainStackParamList, TabParamList } from '../types/NavigationProps'
 
 //  screens
 import Home from '../screens/Home'
@@ -18,22 +19,9 @@ import IconShareIos from '../components/Svg/IconShareIos'
 import IconEllipsis from '../components/Svg/IconEllipsis'
 import IconPlus from '../components/Svg/IconPlus'
 
-type MainStackParamList = {
-  Home: undefined;
-  Pin: { id: string }
-}
-
-type TabParamList = {
-  HomeScreen: NavigatorScreenParams<MainStackParamList>;
-  ButtonModal: undefined;
-  Profile: { userId: string };
-};
-
 const Stack = createNativeStackNavigator<MainStackParamList>()
 
 const Tab = createBottomTabNavigator<TabParamList>()
-
-type Props = NativeStackScreenProps<MainStackParamList, 'Pin'>
 
 const MainStack = () => {
   return (
