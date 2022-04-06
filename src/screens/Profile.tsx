@@ -1,16 +1,21 @@
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import FastImage from 'react-native-fast-image'
 import { useTheme } from '@react-navigation/native'
+import ModalAddContext from '../context/ModalAdd/ModalAddContext'
 
 //  components
-import MasonryList from '../components/MasonryList'
+import MasonryList from '../components/common/MasonryList'
 
 //  dummy data
 import pins from '../../assets/dummy-data/pins'
 
 const Profile = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
+
+  const { visible } = useContext(ModalAddContext)
+
+  console.log(visible, 'in Profile')
 
   const theme = useTheme()
 

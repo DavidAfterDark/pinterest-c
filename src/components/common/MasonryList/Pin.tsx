@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image'
 import { useTheme, useNavigation } from '@react-navigation/native'
 
 //  icons
-import IconHeart from '../Svg/IconHeart'
+import IconHeart from '../../Svg/IconHeart'
 
 interface PinProps {
   pin: {
