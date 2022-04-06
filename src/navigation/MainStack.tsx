@@ -3,7 +3,7 @@ import { View, Platform, Pressable } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import ModalAddContext from '../context/ModalAdd/ModalAddContext'
+import BottomModalContext from '../context/BottomModal/BottomModalContext'
 import { MainStackParamList, TabParamList } from '../types/NavigationProps'
 
 //  screens
@@ -55,7 +55,7 @@ const MainStack = () => {
 const MainTabs = () => {
   const theme = useTheme()
 
-  const { setVisible } = useContext(ModalAddContext)
+  const { setVisible } = useContext(BottomModalContext)
 
   return (
      <Tab.Navigator

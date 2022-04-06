@@ -1,12 +1,12 @@
 import React from 'react'
 import Root from './src/navigation'
-import ModalAddState from './src/context/ModalAdd/ModalAddState'
+import BottomModalState from './src/context/BottomModal/BottomModalState'
 
 const App = () => {
   return (
-    <ModalAddState>
+    <BottomModalState>
       <Root />
-    </ModalAddState>
+    </BottomModalState>
   )
 }
 
