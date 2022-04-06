@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 75
   },
 
   activityIndicator: {
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 5
   },
 
   image: {
-    width: 200,
+    width: 120,
     aspectRatio: 1,
     borderRadius: 100,
     backgroundColor: 'gray'
@@ -78,8 +79,7 @@ const styles = StyleSheet.create({
 
   name: {
     fontFamily: 'Inter-Bold',
-    fontSize: 36,
-    marginBottom: 10
+    fontSize: 36
   },
 
   username: {
