@@ -10,6 +10,7 @@ import { MainStackParamList, TabParamList } from '../types/NavigationProps'
 import Home from '../screens/Home'
 import Pin from '../screens/Pin'
 import Profile from '../screens/Profile'
+import CreatePin from '../screens/CreatePin'
 
 //  icons
 import IconHome from '../components/Svg/IconHome'
@@ -25,12 +26,8 @@ const Tab = createBottomTabNavigator<TabParamList>()
 
 const MainStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        animation: 'slide_from_right',
-        contentStyle: { backgroundColor: 'transparent' }
-      }}
-    >
+    <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'transparent' } }} >
+      <Stack.Group screenOptions={{ animation: 'slide_from_right' }}>
         <Stack.Screen
           name='Home'
           component={MainTabs}
@@ -48,6 +45,15 @@ const MainStack = () => {
             headerBackVisible: true
           })}
         />
+      </Stack.Group>
+
+      <Stack.Screen
+        name='CreatePin'
+        component={CreatePin}
+        options={() => ({
+          title: 'Por Hacer Header...'
+        })}
+      />
     </Stack.Navigator>
   )
 }

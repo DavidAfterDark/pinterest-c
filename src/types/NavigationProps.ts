@@ -3,7 +3,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 export type MainStackParamList = {
   Home: undefined;
-  Pin: { id: string }
+  Pin: { id: string };
+  CreatePin: undefined;
 }
 
 export type TabParamList = {
@@ -11,6 +12,9 @@ export type TabParamList = {
   ButtonModal: undefined;
   Profile: { userId: string };
 }
+
+//  home screen
+export type HomeScreenProps = NativeStackScreenProps<MainStackParamList, 'Home'>
 
 //  pin screen
 export type PinScreenProps = NativeStackScreenProps<MainStackParamList, 'Pin'>
