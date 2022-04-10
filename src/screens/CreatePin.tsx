@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList, PermissionsAndroid, Image, Pressable } from 'react-native'
+import { View, StyleSheet, PermissionsAndroid, Image, Pressable, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraRoll from '@react-native-community/cameraroll'
@@ -22,9 +22,13 @@ interface dynamicStylesProps {
   largeWidthImage: boolean
 }
 
-const CreatePin = () => {
-  const theme = useTheme()
+interface SelectedImageProps {
+  images: GalleryMediaProps[];
+  selectedImage: string;
+  dynamicStyles?: dynamicStylesProps;
+}
 
+const CreatePin = () => {
   const [images, setImages] = useState<GalleryMediaProps[]>([])
 
   const [selectedImage, setSelectedImage] = useState<string>('')
@@ -86,16 +90,14 @@ const CreatePin = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.selectedImageContainer, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
-        {images && <FastImage source={{ uri: selectedImage }} style={[styles.selectedImage, { aspectRatio: dynamicStyles?.aspectRatio }, !dynamicStyles?.largeWidthImage && { height: '100%' }]} resizeMode='stretch' />}
-      </View>
-      <FlatList
+      <SelectedImage images={images} selectedImage={selectedImage} dynamicStyles={dynamicStyles} />
+       <FlatList
         data={images}
         renderItem={({ item, index }) => {
           if (index < 2) {
             return (
               <Pressable style={styles.imageContainer}>
-                <View style={[styles.image, { backgroundColor: 'gray' }]} />
+                <View style={[styles.image, { backgroundColor: '#403b3b' }]} />
               </Pressable>
             )
           }
@@ -112,6 +114,27 @@ const CreatePin = () => {
   )
 }
 
+const SelectedImage = ({ images, selectedImage, dynamicStyles }: SelectedImageProps) => {
+  const theme = useTheme()
+
+  return (
+    <View pointerEvents='none' style={[styles.selectedImageContainer, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
+      {images && (
+        <FastImage
+          source={{ uri: selectedImage }}
+          resizeMode='stretch'
+          style={[
+            styles.selectedImage,
+            { aspectRatio: dynamicStyles?.aspectRatio },
+            !dynamicStyles?.largeWidthImage && { flex: 1, height: '100%' },
+            dynamicStyles?.largeWidthImage && { maxHeight: '100%' }
+          ]}
+        />
+      )}
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
 
   selectedImageContainer: {
     width: '100%',
-    height: '51%',
+    height: '48%',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -129,7 +152,8 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    flex: 1
+    flex: 1,
+    padding: 1
   },
 
   image: {
