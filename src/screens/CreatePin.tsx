@@ -1,5 +1,5 @@
-import { View, StyleSheet, PermissionsAndroid, Image, Pressable, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, PermissionsAndroid, Image, Pressable, Animated, useWindowDimensions, FlatList } from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraRoll from '@react-native-community/cameraroll'
 import { getPermissionsReadExternalStorageAndroid } from '../utils'
@@ -22,12 +22,6 @@ interface dynamicStylesProps {
   largeWidthImage: boolean
 }
 
-interface SelectedImageProps {
-  images: GalleryMediaProps[];
-  selectedImage: string;
-  dynamicStyles?: dynamicStylesProps;
-}
-
 const CreatePin = () => {
   const [images, setImages] = useState<GalleryMediaProps[]>([])
 
@@ -35,13 +29,15 @@ const CreatePin = () => {
 
   const [dynamicStyles, setDynamicStyles] = useState<dynamicStylesProps>()
 
+  const dimensions = useWindowDimensions()
+
   useEffect(() => {
     (async () => {
       const granted = await getPermissionsReadExternalStorageAndroid()
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         try {
-          const photos = await CameraRoll.getPhotos({ first: 25, assetType: 'Photos' })
+          const photos = await CameraRoll.getPhotos({ first: 26, assetType: 'Photos' })
 
           setImages([{ icon: 'icono 1', node: { group_name: '', image: { uri: '' } } }, { icon: 'icono 1', node: { group_name: '', image: { uri: '' } } }, ...photos.edges])
 
@@ -84,54 +80,81 @@ const CreatePin = () => {
     }
   }, [selectedImage])
 
+  //  hidden header animation
+  const headerHeight = 280
+
+  const scrollY = useRef(new Animated.Value(0)).current
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  )
+
+  const scrollYClamped = Animated.diffClamp(scrollY, 0, headerHeight)
+
+  const translateY = scrollYClamped.interpolate({
+    inputRange: [0, headerHeight],
+    outputRange: [0, headerHeight / 2],
+    extrapolate: 'clamp'
+  })
+
+  const translateYNumber = useRef()
+
+  translateY.addListener(({ value }) => {
+    translateYNumber.current = value
+  })
+
+  const theme = useTheme()
+
+  const flatListRef = useRef<FlatList>(null)
+
   const onPressImage = (props: GalleryMediaProps) => {
     setSelectedImage(props.node.image.uri)
+    flatListRef?.current?.scrollToOffset({ animated: true, offset: 0 })
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SelectedImage images={images} selectedImage={selectedImage} dynamicStyles={dynamicStyles} />
-       <FlatList
+    <SafeAreaView style={[styles.container]}>
+      <Animated.FlatList
         data={images}
+        ref={flatListRef}
+        onScroll={handleScroll}
+        contentContainerStyle={{ height: dimensions.height + headerHeight - 83 }}
+        numColumns={4}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() => (
+          <Animated.View style={[styles.selectedImageContainer, { backgroundColor: theme.dark ? '#000' : '#fff', transform: [{ translateY }] }]}>
+            {images && (
+              <FastImage
+                source={{ uri: selectedImage }}
+                resizeMode='stretch'
+                style={[
+                  styles.selectedImage,
+                  { aspectRatio: dynamicStyles?.aspectRatio },
+                  !dynamicStyles?.largeWidthImage && { flex: 1, height: '100%' },
+                  dynamicStyles?.largeWidthImage && { maxHeight: '100%' }
+                ]}
+              />
+            )}
+        </Animated.View>
+        )}
         renderItem={({ item, index }) => {
           if (index < 2) {
             return (
-              <Pressable style={styles.imageContainer}>
+              <Pressable style={[styles.imageContainer, { width: dimensions.width / 4 }]}>
                 <View style={[styles.image, { backgroundColor: '#403b3b' }]} />
               </Pressable>
             )
           }
 
           return (
-            <Pressable style={styles.imageContainer} onPress={() => onPressImage(item)}>
+            <Pressable style={[styles.imageContainer, { width: dimensions.width / 4 }]} onPress={() => onPressImage(item)}>
               <FastImage source={{ uri: item.node.image.uri }} style={styles.image} />
             </Pressable>
           )
         }}
-        numColumns={4}
       />
     </SafeAreaView>
-  )
-}
-
-const SelectedImage = ({ images, selectedImage, dynamicStyles }: SelectedImageProps) => {
-  const theme = useTheme()
-
-  return (
-    <View pointerEvents='none' style={[styles.selectedImageContainer, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
-      {images && (
-        <FastImage
-          source={{ uri: selectedImage }}
-          resizeMode='stretch'
-          style={[
-            styles.selectedImage,
-            { aspectRatio: dynamicStyles?.aspectRatio },
-            !dynamicStyles?.largeWidthImage && { flex: 1, height: '100%' },
-            dynamicStyles?.largeWidthImage && { maxHeight: '100%' }
-          ]}
-        />
-      )}
-    </View>
   )
 }
 
@@ -142,7 +165,7 @@ const styles = StyleSheet.create({
 
   selectedImageContainer: {
     width: '100%',
-    height: '48%',
+    height: 280,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -152,8 +175,8 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    flex: 1,
-    padding: 1
+    padding: 1,
+    backgroundColor: 'black'
   },
 
   image: {
