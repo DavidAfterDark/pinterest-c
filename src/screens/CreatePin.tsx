@@ -1,13 +1,17 @@
-import { View, StyleSheet, PermissionsAndroid, Image, Pressable, Animated, useWindowDimensions, FlatList } from 'react-native'
-import React, { useEffect, useState, useRef } from 'react'
+import { StyleSheet, PermissionsAndroid, Animated, useWindowDimensions, FlatList } from 'react-native'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraRoll from '@react-native-community/cameraroll'
 import { getPermissionsReadExternalStorageAndroid } from '../utils'
-import FastImage from 'react-native-fast-image'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useRoute, useNavigation } from '@react-navigation/native'
+import { CreatePinScreenRouteProps, CreatePinScreenNavigationProps } from '../types/NavigationProps'
+
+//  componets
+import SelectedImage from '../components/CreatePin/SelectedImage'
+import ImageItem from '../components/CreatePin/ImageItem'
 
 interface GalleryMediaProps {
-  icon?: string;
+  // icon?: string;
   node: {
     group_name: string; // eslint-disable-line
     image: {
@@ -16,69 +20,59 @@ interface GalleryMediaProps {
   },
 }
 
-interface dynamicStylesProps {
-  aspectRatio?: number;
-  height?: string;
-  largeWidthImage: boolean
-}
-
 const CreatePin = () => {
+  const route = useRoute<CreatePinScreenRouteProps>()
+
+  const navigation = useNavigation<CreatePinScreenNavigationProps>()
+
+  const dimensions = useWindowDimensions()
+
+  const theme = useTheme()
+
   const [images, setImages] = useState<GalleryMediaProps[]>([])
 
   const [selectedImage, setSelectedImage] = useState<string>('')
 
-  const [dynamicStyles, setDynamicStyles] = useState<dynamicStylesProps>()
+  const [numberOfRenderImages, setNumberOfRenderImages] = useState(0)
 
-  const dimensions = useWindowDimensions()
+  //  obtiene el nombre de todos los albunes y el numero total de sus imagenes, asi como el total de todas
+  //  set params de los albunes para que puedan ser pasados a otra vista
+  useEffect(() => {
+    if (!route.params.albums) {
+      (async () => {
+        const albums = await CameraRoll.getAlbums({ assetType: 'Photos' })
+        let total = 0
 
+        albums.forEach((album) => {
+          total = total + album.count
+        })
+
+        navigation.setParams({ totalImages: total, albums: albums })
+      })()
+    }
+  }, [route.params.album])
+
+  //  obtiene todas las imagenes de los albunes de fotos
   useEffect(() => {
     (async () => {
       const granted = await getPermissionsReadExternalStorageAndroid()
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         try {
-          const photos = await CameraRoll.getPhotos({ first: 26, assetType: 'Photos' })
-
-          setImages([{ icon: 'icono 1', node: { group_name: '', image: { uri: '' } } }, { icon: 'icono 1', node: { group_name: '', image: { uri: '' } } }, ...photos.edges])
-
-          setSelectedImage(photos.edges[0].node.image.uri)
-          Image.getSize(photos.edges[0].node.image.uri, (width, height) => {
-            if (width > height) {
-              setDynamicStyles({
-                aspectRatio: width / height,
-                largeWidthImage: true
-              })
-            } else {
-              setDynamicStyles({
-                aspectRatio: width / height,
-                largeWidthImage: false
-              })
-            }
+          const photos = await CameraRoll.getPhotos({
+            first: 50 + numberOfRenderImages,
+            assetType: 'Photos',
+            groupName: route.params.album
           })
+
+          setImages(photos.edges)
+          setSelectedImage(photos.edges[0].node.image.uri)
         } catch (error) {
           console.error(error)
         }
       }
     })()
-  }, [])
-
-  useEffect(() => {
-    if (selectedImage) {
-      Image.getSize(selectedImage, (width, height) => {
-        if (width > height) {
-          setDynamicStyles({
-            aspectRatio: width / height,
-            largeWidthImage: true
-          })
-        } else {
-          setDynamicStyles({
-            aspectRatio: width / height,
-            largeWidthImage: false
-          })
-        }
-      })
-    }
-  }, [selectedImage])
+  }, [route.params.album, route.params.totalImages, numberOfRenderImages])
 
   //  hidden header animation
   const headerHeight = 280
@@ -90,28 +84,20 @@ const CreatePin = () => {
     { useNativeDriver: true }
   )
 
-  const scrollYClamped = Animated.diffClamp(scrollY, 0, headerHeight)
-
-  const translateY = scrollYClamped.interpolate({
-    inputRange: [0, headerHeight],
-    outputRange: [0, headerHeight / 2],
-    extrapolate: 'clamp'
-  })
-
-  const translateYNumber = useRef()
-
-  translateY.addListener(({ value }) => {
-    translateYNumber.current = value
-  })
-
-  const theme = useTheme()
-
   const flatListRef = useRef<FlatList>(null)
 
-  const onPressImage = (props: GalleryMediaProps) => {
-    setSelectedImage(props.node.image.uri)
+  const onPressImage = useCallback((image: string) => {
+    console.log('re render=?')
+    setSelectedImage(image)
     flatListRef?.current?.scrollToOffset({ animated: true, offset: 0 })
+  }, [setSelectedImage])
+
+  const onScrollToEnd = () => {
+    setNumberOfRenderImages(numberOfRenderImages + 100)
+    console.log(numberOfRenderImages, '<<<<')
   }
+
+  console.log('re remder de create pin screen')
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
@@ -122,37 +108,10 @@ const CreatePin = () => {
         contentContainerStyle={[images.length < 30 && { height: dimensions.height + headerHeight - 83 }]}
         numColumns={4}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
-          <Animated.View style={[styles.selectedImageContainer, { backgroundColor: theme.dark ? '#000' : '#fff', transform: [{ translateY }] }]}>
-            {images && (
-              <FastImage
-                source={{ uri: selectedImage }}
-                resizeMode='stretch'
-                style={[
-                  styles.selectedImage,
-                  { aspectRatio: dynamicStyles?.aspectRatio },
-                  !dynamicStyles?.largeWidthImage && { flex: 1, height: '100%' },
-                  dynamicStyles?.largeWidthImage && { maxHeight: '100%' }
-                ]}
-              />
-            )}
-        </Animated.View>
-        )}
-        renderItem={({ item, index }) => {
-          if (index < 2) {
-            return (
-              <Pressable style={[styles.imageContainer, { width: dimensions.width / 4 }]}>
-                <View style={[styles.image, { backgroundColor: '#403b3b' }]} />
-              </Pressable>
-            )
-          }
-
-          return (
-            <Pressable style={[styles.imageContainer, { width: dimensions.width / 4 }]} onPress={() => onPressImage(item)}>
-              <FastImage source={{ uri: item.node.image.uri }} style={styles.image} />
-            </Pressable>
-          )
-        }}
+        onEndReachedThreshold={20}
+        onEndReached={onScrollToEnd}
+        ListHeaderComponent={<SelectedImage selectedImage={selectedImage} />}
+        renderItem={({ item, index }) => <ImageItem image={item.node.image.uri} onPressImage={onPressImage} />}
       />
     </SafeAreaView>
   )
@@ -161,27 +120,6 @@ const CreatePin = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-
-  selectedImageContainer: {
-    width: '100%',
-    height: 280,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  selectedImage: {
-    width: '100%'
-  },
-
-  imageContainer: {
-    padding: 1,
-    backgroundColor: 'black'
-  },
-
-  image: {
-    width: '100%',
-    height: 80
   }
 })
 
