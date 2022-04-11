@@ -114,12 +114,12 @@ const CreatePin = () => {
   }
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
       <Animated.FlatList
         data={images}
         ref={flatListRef}
         onScroll={handleScroll}
-        contentContainerStyle={{ height: dimensions.height + headerHeight - 83 }}
+        contentContainerStyle={[images.length < 30 && { height: dimensions.height + headerHeight - 83 }]}
         numColumns={4}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => (
