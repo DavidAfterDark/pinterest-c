@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Platform, Pressable } from 'react-native'
+import { View, Platform, Pressable, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -11,6 +11,7 @@ import Home from '../screens/Home'
 import Pin from '../screens/Pin'
 import Profile from '../screens/Profile'
 import CreatePin from '../screens/CreatePin'
+import AlbumPicker from '../screens/AlbumPicker'
 
 //  icons
 import IconHome from '../components/Svg/IconHome'
@@ -19,12 +20,16 @@ import IconShareAndroid from '../components/Svg/IconShareAndroid'
 import IconShareIos from '../components/Svg/IconShareIos'
 import IconEllipsis from '../components/Svg/IconEllipsis'
 import IconPlus from '../components/Svg/IconPlus'
+import IconX from '../components/Svg/IconX'
+import IconChevronDown from '../components/Svg/IconChevronDown'
 
 const Stack = createNativeStackNavigator<MainStackParamList>()
 
 const Tab = createBottomTabNavigator<TabParamList>()
 
 const MainStack = () => {
+  const theme = useTheme()
+
   return (
     <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'transparent' } }} >
       <Stack.Group screenOptions={{ animation: 'slide_from_right' }}>
@@ -50,10 +55,38 @@ const MainStack = () => {
       <Stack.Screen
         name='CreatePin'
         component={CreatePin}
-        options={() => ({
-          title: 'Por Hacer Header...'
+        initialParams={{ album: undefined, totalImages: undefined }}
+        options={({ navigation, route }) => ({
+          title: '',
+          headerLeft: () => (
+            <Pressable onPress={(() => navigation.goBack())}>
+              <IconX color={theme.dark ? '#fff' : '#000'} size={27} />
+            </Pressable>
+          ),
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Pressable style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('AlbumPicker', { totalImages: route.params.totalImages, albums: route.params.albums })}>
+                <Text style={{ marginRight: 14, color: theme.dark ? '#fff' : '#000', fontFamily: 'Inter-Medium', fontSize: 15 }}>{route.params.album || 'Todas las fotos'}</Text>
+                <IconChevronDown color={theme.dark ? '#fff' : '#000'} size={10} />
+              </Pressable>
+              <Pressable style={{ backgroundColor: 'red', borderRadius: 20, marginLeft: 20 }}>
+                <Text style={{ fontFamily: 'Inter-Bold', fontSize: 15, color: '#fff', paddingVertical: 9, paddingHorizontal: 12 }}>Siguiente</Text>
+              </Pressable>
+            </View>
+          )
         })}
       />
+
+      <Stack.Group screenOptions={{ animation: 'slide_from_bottom' }}>
+        <Stack.Screen
+          name='AlbumPicker'
+          component={AlbumPicker}
+          options={() => ({
+            title: 'Elige una carpeta',
+            headerTitleStyle: { fontSize: 16 }
+          })}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   )
 }
