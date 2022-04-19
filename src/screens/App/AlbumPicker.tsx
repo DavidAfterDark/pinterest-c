@@ -1,9 +1,9 @@
 import { FlatList, StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Album from '../components/AlbumPicker/Album'
+import Album from '../../components/AlbumPicker/Album'
 import { useTheme, useRoute } from '@react-navigation/native'
-import { AlbumPickerScreenRouteProps } from '../types/NavigationProps'
+import { AlbumPickerScreenRouteProps } from '../../types/NavigationProps'
 
 // interface AlbumsProps {
 //   count: number;

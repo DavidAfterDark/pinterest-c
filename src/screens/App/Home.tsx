@@ -2,15 +2,15 @@ import React, { useContext } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '@react-navigation/native'
-import BottomModalContext from '../context/BottomModal/BottomModalContext'
-import { HomeScreenProps } from '../types/NavigationProps'
+import BottomModalContext from '../../context/BottomModal/BottomModalContext'
+import { HomeScreenProps } from '../../types/NavigationProps'
 
 //  components
-import MasonryList from '../components/common/MasonryList'
+import MasonryList from '../../components/common/MasonryList'
 
 //  dummy data
-import pins from '../../assets/dummy-data/pins'
-import TabBarModal from '../components/common/TabBarModal'
+import pins from '../../../assets/dummy-data/pins'
+import TabBarModal from '../../components/common/TabBarModal'
 
 const Home = ({ navigation } :HomeScreenProps) => {
   const theme = useTheme()

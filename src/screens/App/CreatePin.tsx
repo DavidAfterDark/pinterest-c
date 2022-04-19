@@ -2,13 +2,13 @@ import { StyleSheet, PermissionsAndroid, Animated, useWindowDimensions, FlatList
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraRoll from '@react-native-community/cameraroll'
-import { getPermissionsReadExternalStorageAndroid } from '../utils'
+import { getPermissionsReadExternalStorageAndroid } from '../../utils'
 import { useTheme, useRoute, useNavigation } from '@react-navigation/native'
 import { CreatePinScreenRouteProps, CreatePinScreenNavigationProps } from '../types/NavigationProps'
 
 //  componets
-import SelectedImage from '../components/CreatePin/SelectedImage'
-import ImageItem from '../components/CreatePin/ImageItem'
+import SelectedImage from '../../components/CreatePin/SelectedImage'
+import ImageItem from '../../components/CreatePin/ImageItem'
 
 interface GalleryMediaProps {
   // icon?: string;

@@ -7,11 +7,11 @@ import BottomModalContext from '../context/BottomModal/BottomModalContext'
 import { MainStackParamList, TabParamList } from '../types/NavigationProps'
 
 //  screens
-import Home from '../screens/Home'
-import Pin from '../screens/Pin'
-import Profile from '../screens/Profile'
-import CreatePin from '../screens/CreatePin'
-import AlbumPicker from '../screens/AlbumPicker'
+import Home from '../screens/App/Home'
+import Pin from '../screens/App/Pin'
+import Profile from '../screens/App/Profile'
+import CreatePin from '../screens/App/CreatePin'
+import AlbumPicker from '../screens/App/AlbumPicker'
 
 //  icons
 import IconHome from '../components/Svg/IconHome'
