@@ -4,10 +4,10 @@ import FastImage from 'react-native-fast-image'
 import { useTheme } from '@react-navigation/native'
 
 //  components
-import MasonryList from '../components/common/MasonryList'
+import MasonryList from '../../components/common/MasonryList'
 
 //  dummy data
-import pins from '../../assets/dummy-data/pins'
+import pins from '../../../assets/dummy-data/pins'
 
 const Profile = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme, useRoute } from '@react-navigation/native'
-import { PinScreenRouteProps } from '../types/NavigationProps'
+import { PinScreenRouteProps } from '../../types/NavigationProps'
 
 //  dummy data
-import pins from '../../assets/dummy-data/pins'
+import pins from '../../../assets/dummy-data/pins'
 
 const Pin = () => {
   const route = useRoute<PinScreenRouteProps>()
