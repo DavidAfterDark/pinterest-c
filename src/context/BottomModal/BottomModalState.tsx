@@ -1,9 +1,13 @@
-import React, { useReducer, useMemo } from 'react'
+import React, { useReducer, useMemo, ReactNode } from 'react'
 import BottomModalContext from './BottomModalContext'
 import BottomModalReducer from './BottomModalReducer'
 import { SET_VISIBLE } from '../../types/Actions'
 
-const BottomModalState = ({ children }) => {
+interface BottomModalStateProps {
+  children?: ReactNode;
+}
+
+const BottomModalState = ({ children }: BottomModalStateProps) => {
   const initialState = {
     visible: false
   }
