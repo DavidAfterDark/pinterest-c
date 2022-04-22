@@ -3,6 +3,7 @@ import { useColorScheme, StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Dark, Default } from '../theme'
+import AuthStack from './AuthStack'
 import MainStack from './MainStack'
 
 const Navigation = () => {
@@ -15,7 +16,7 @@ const Navigation = () => {
         barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
       />
       <NavigationContainer theme={scheme === 'dark' ? Dark : Default}>
-        <MainStack />
+        <AuthStack />
       </NavigationContainer>
     </SafeAreaProvider>
   )
