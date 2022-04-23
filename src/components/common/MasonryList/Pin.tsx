@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator, Pressable, PressableProps, Image } from 'react-native'
+import { View, ViewProps, Text, StyleSheet, ActivityIndicator, Pressable, PressableProps, Image, TextProps } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { useTheme, useNavigation } from '@react-navigation/native'
@@ -17,10 +17,13 @@ interface PinProps {
  /**
  * default: false
  */
-  favoritesButton?: boolean
+  favoritesButton?: boolean,
+  pinStyles?: ViewProps['style'],
+  pinTextStyles?: TextProps['style'],
+  disableTouch?: boolean
 }
 
-const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
+const Pin = ({ pin, favoritesButton, onPressFavoriteButton, pinStyles, pinTextStyles, disableTouch }: PinProps) => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
 
   const [ratio, setRatio] = useState<number>(1)
@@ -36,11 +39,12 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
   }, [pin.image])
 
   const goToPinScreen = () => {
+    if (disableTouch) return
     navigation.navigate('Pin', { id: pin.id })
   }
 
   return (
-    <Pressable style={styles.container} onPress={goToPinScreen}>
+    <Pressable style={[styles.container, pinStyles]} onPress={goToPinScreen}>
       <View style={styles.imageContainer}>
         {loadingImage && <ActivityIndicator style={styles.activityIndicator} size={35} />}
         <FastImage
@@ -55,14 +59,15 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton }: PinProps) => {
           </Pressable>
         )}
       </View>
-        <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>
+      {pin.title ? <Text style={[styles.title, { color: theme.colors.text }, pinTextStyles]}>{pin?.title}</Text> : null}
     </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%'
+    width: '100%',
+    padding: 2.5
   },
 
   activityIndicator: {
@@ -98,8 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: '#fff',
-    marginTop: 5,
-    marginBottom: 25
+    marginTop: 5
   }
 })
 
