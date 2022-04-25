@@ -3,8 +3,8 @@ import Svg, { SvgProps, Path, Circle } from 'react-native-svg'
 
 const IconPinterestClon = (props: SvgProps) => (
   <Svg
-    width={154}
-    height={154}
+    width={104}
+    height={104}
     viewBox='-5 0 140 130'
   >
     <Circle cx={65} cy={65} r={65} fill="#fff" />
