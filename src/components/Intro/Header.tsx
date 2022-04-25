@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
+import { useTheme } from '@react-navigation/native'
 
 // components
 import MasonryList from '../common/MasonryList'
@@ -38,11 +39,23 @@ const IMAGES = [
 ]
 
 const Header = () => {
+  const theme = useTheme()
+
   return (
     <View>
-      <MasonryList data={IMAGES} numColumns={3} disableTouch containerStyles={{ top: -80 }} contentContainerStyle={{ height: 140 }} />
-      <View style={styles.shadow}>
-        <Text>hola soy un texto</Text>
+      <MasonryList
+        data={IMAGES}
+        numColumns={3}
+        disableTouch
+        containerStyles={styles.containerStyles}
+        contentContainerStyle={styles.contentContainerStyle}
+      />
+
+      <View style={styles.shadowContainer}>
+        <View style={[styles.shadow, { backgroundColor: theme.dark ? '#000' : '#fff', top: -3 }]} />
+        <View style={[styles.shadow, { backgroundColor: theme.dark ? '#000' : '#fff', top: -4, opacity: 0.6 }]} />
+        <View style={[styles.shadow, { backgroundColor: theme.dark ? '#000' : '#fff', top: -2, opacity: 0.6 }]} />
+        <View style={[styles.shadow, { backgroundColor: theme.dark ? '#000' : '#fff', top: -1, opacity: 0.8 }]} />
       </View>
     </View>
   )
@@ -50,28 +63,25 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   containerStyles: {
-    top: -80,
-    height: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 15
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.00,
-    elevation: 30
+    top: -95
   },
+
+  contentContainerStyle: {
+    height: 120
+  },
+
+  shadowContainer: {
+    height: 10,
+    width: '100%'
+  },
+
   shadow: {
-    padding: 20,
-    backgroundColor: '#d9d9d9',
-    shadowColor: '#000000',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 1,
-      width: 1
-    }
+    position: 'absolute',
+    height: 1,
+    width: '100%',
+    opacity: 0.6
   }
+
 })
 
 export default Header
