@@ -8,25 +8,39 @@ interface MasonryListProps {
   data: { id: string, image: string, title: string }[],
   favoritesButton?: boolean,
   onPressFavoriteButton?: () => void,
-  numColumns: number,
+  numColumns?: number,
   pinStyles?: ViewProps['style'],
   pinTextStyles?: TextProps['style'],
   containerStyles?: ViewProps['style']
   disableTouch?: boolean
-  contentContainerStyle?: ScrollViewProps['style']
+  contentContainerStyle?: ScrollViewProps['style'];
 }
 
-const MasonryList = ({ data, favoritesButton = false, onPressFavoriteButton, numColumns, pinStyles, pinTextStyles, containerStyles, contentContainerStyle, disableTouch }: MasonryListProps) => {
+const MasonryList = ({
+  data,
+  favoritesButton = false,
+  onPressFavoriteButton,
+  numColumns,
+  pinStyles,
+  pinTextStyles,
+  containerStyles,
+  contentContainerStyle,
+  disableTouch
+}: MasonryListProps) => {
   const width = useWindowDimensions().width
 
-  if (!numColumns) numColumns = Math.ceil(width / 300)
+  let numOfColumns = Math.ceil(width / 300)
+
+  if (numColumns) {
+    numOfColumns = numColumns
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={contentContainerStyle}>
       <View style={[styles.container, containerStyles]}>
-        {Array.from(Array(numColumns)).map((col, colIndex) => (
+        {Array.from(Array(numOfColumns)).map((col, colIndex) => (
           <View style={styles.column} key={colIndex}>
-            {data.filter((_item, index) => index % numColumns === colIndex).map((pin) => (
+            {data.filter((_item, index) => index % numOfColumns === colIndex).map((pin) => (
               <Pin
                 key={pin.id}
                 pin={pin}
