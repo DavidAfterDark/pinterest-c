@@ -1,4 +1,4 @@
-import { Text, TextProps, Pressable, ViewProps, StyleSheet } from 'react-native'
+import { Text, TextProps, TouchableOpacity, ViewProps, StyleSheet } from 'react-native'
 import React, { ReactNode } from 'react'
 
 interface ButtonProps {
@@ -11,29 +11,31 @@ interface ButtonProps {
 
 const Button = ({ iconLeft, onPress, text, buttonStyles, textStyles }: ButtonProps) => {
   return (
-    <Pressable style={[styles.container, buttonStyles]} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.7} style={[styles.container, buttonStyles]} onPress={onPress}>
       {iconLeft}
       <Text style={[styles.text, textStyles]}>{text}</Text>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D7143A',
+    backgroundColor: '#C30026',
     flexDirection: 'row',
     width: 270,
+    height: 45,
+    alignItems: 'center',
     padding: 10,
     paddingVertical: 8,
-    borderRadius: 25,
-    alignSelf: 'center'
+    borderRadius: 25
   },
 
   text: {
     width: '100%',
     textAlign: 'center',
     fontSize: 18,
-    color: '#fff'
+    color: '#fff',
+    fontWeight: 'bold'
   }
 })
 
