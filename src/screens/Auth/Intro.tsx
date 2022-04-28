@@ -1,14 +1,24 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useTheme } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
 
 //  components
 import Header from '../../components/Intro/Header'
 import IconPinterestClon from '../../components/Svg/IconPinterestClon'
 import Button from '../../components/common/Button'
+import Input from '../../components/common/Input'
+import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
+import IconGoogle from '../../components/Svg/IconGoogle'
 
 const Intro = () => {
   const theme = useTheme()
+
+  const { control, resetField } = useForm()
+
+  const cleanEmailField = () => {
+    resetField('email')
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
@@ -18,10 +28,33 @@ const Intro = () => {
       </View>
       <Text style={[styles.welcomeText, { color: theme.dark ? '#fff' : '#000' }]}>Te damos la bienvenida a Pinterest C</Text>
 
-      <View style={styles.buttonGroups}>
+      <View style={styles.body}>
+        <Input
+          name='email'
+          control={control}
+          placeholder='Correo'
+          inputContainerStyles={styles.input}
+          resetField={cleanEmailField}
+        />
+
         <Button
           text='Continuar'
-          onPress={() => console.log('press continuar')}
+          buttonStyles={styles.buttonContinue}
+          onPress={() => console.log('press button!')}
+        />
+
+        <Button
+          text='Continuar con Facebook'
+          buttonStyles={styles.buttonFacebook}
+          onPress={() => console.log('facebook!')}
+          iconLeft={<IconFacebookRounded color='#fff' />}
+        />
+
+        <Button
+          text='Continuar con Google'
+          buttonStyles={styles.buttonGoogle}
+          onPress={() => console.log('google')}
+          iconLeft={<IconGoogle size={26} />}
         />
       </View>
     </View>
@@ -35,7 +68,8 @@ const styles = StyleSheet.create({
 
   iconPinterestClonContainer: {
     alignSelf: 'center',
-    top: -15
+    top: -25,
+    marginBottom: -22
   },
 
   welcomeText: {
@@ -44,9 +78,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25
   },
 
-  buttonGroups: {
+  body: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 25
+  },
+
+  input: {
+    marginBottom: 30
+  },
+
+  buttonContinue: {
+    marginBottom: 25
+  },
+
+  buttonFacebook: {
+    marginBottom: 10,
+    backgroundColor: '#1178f2'
+  },
+
+  buttonGoogle: {
+    backgroundColor: '#4d4d4d'
   }
 
 })
