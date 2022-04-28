@@ -1,6 +1,7 @@
 import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacity, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
+import IconCircleXMark from '../../Svg/IconCircleXMark'
 
 interface inputProps {
   placeholder?: string,
@@ -13,9 +14,10 @@ interface inputProps {
   rules?: object,
   autoCapitalize?: TextInputProps['autoCapitalize'],
   blurOnSubmit?: TextInputProps['blurOnSubmit'];
+  resetField: () => void
 }
 
-const CustomInput = ({ name, control, rules = {}, placeholder, inputStyles, inputContainerStyles, secureTextEntry = false, onBlur, autoCapitalize, blurOnSubmit }: inputProps) => {
+const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputContainerStyles, secureTextEntry = false, onBlur, autoCapitalize, blurOnSubmit, resetField }: inputProps) => {
   const [openEye, setOpenEye] = useState(false)
 
   const onPressEye = () => {
@@ -28,17 +30,28 @@ const CustomInput = ({ name, control, rules = {}, placeholder, inputStyles, inpu
       control={control}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <View style={[inputContainerStyles]}>
+        <View style={[styles.container, inputContainerStyles]}>
           <TextInput
             style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }]}
             placeholder={placeholder}
+            placeholderTextColor='#6D6D6D'
             secureTextEntry={secureTextEntry && !openEye}
             onChangeText={onChange}
             value={value}
             onBlur={onBlur}
             autoCapitalize={autoCapitalize}
             blurOnSubmit={blurOnSubmit}
+            selectionColor='#C30026'
           />
+
+          {value
+            ? (
+                <TouchableOpacity style={styles.iconCircleXMark} onPress={resetField}>
+                  <IconCircleXMark color='#6D6D6D' />
+                </TouchableOpacity>
+              )
+            : null
+          }
 
           {secureTextEntry && (
             <TouchableOpacity onPress={onPressEye} style={styles.eye}>
@@ -54,26 +67,45 @@ const CustomInput = ({ name, control, rules = {}, placeholder, inputStyles, inpu
 }
 
 const styles = StyleSheet.create({
-  input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#A2A4B0',
-    paddingLeft: 15,
-    fontSize: 16
+  container: {
+    flexDirection: 'row',
+    width: 270,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#303030',
+    alignItems: 'center'
   },
 
-  eye: {
-    width: 25,
-    height: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    textAlignVertical: 'center',
-    top: '25%',
-    right: 15,
-    zIndex: 500
+  input: {
+    width: '100%',
+    height: 50,
+    paddingHorizontal: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.7
+    // borderWidth: 1,
+    // borderColor: '#A2A4B0',
+    // paddingLeft: 15,
+    // fontSize: 16
   },
+
+  iconCircleXMark: {
+    position: 'absolute',
+    // top: 5,
+    right: 10
+  },
+
+  // eye: {
+  //   width: 25,
+  //   height: 25,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   position: 'absolute',
+  //   alignSelf: 'flex-end',
+  //   textAlignVertical: 'center',
+  //   top: '25%',
+  //   right: 15,
+  //   zIndex: 500
+  // },
 
   errorMessage: {
     color: '#FF1D1D',
@@ -81,4 +113,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CustomInput
+export default Input
