@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useTheme } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
+import { EMAIL_REGEX } from '../../constant'
 
 //  components
 import Header from '../../components/Intro/Header'
@@ -11,13 +12,21 @@ import Input from '../../components/common/Input'
 import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
 import IconGoogle from '../../components/Svg/IconGoogle'
 
+interface formData {
+  email: string,
+}
+
 const Intro = () => {
   const theme = useTheme()
 
-  const { control, resetField } = useForm()
+  const { control, resetField, handleSubmit } = useForm<formData>()
 
   const cleanEmailField = () => {
     resetField('email')
+  }
+
+  const onPressContinue = ({ email }: formData) => {
+    console.log(email)
   }
 
   return (
@@ -33,14 +42,18 @@ const Intro = () => {
           name='email'
           control={control}
           placeholder='Correo'
-          inputContainerStyles={styles.input}
           resetField={cleanEmailField}
+          rules={{
+            required: { value: true, message: 'Ingresa tu correo electronico' },
+            pattern: { value: EMAIL_REGEX, message: 'Este correo electronico no parece ser válido' }
+          }}
+          inputContainerStyles={styles.input}
         />
 
         <Button
           text='Continuar'
           buttonStyles={styles.buttonContinue}
-          onPress={() => console.log('press button!')}
+          onPress={handleSubmit(onPressContinue)}
         />
 
         <Button
