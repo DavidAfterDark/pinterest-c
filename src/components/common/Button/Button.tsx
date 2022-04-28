@@ -1,4 +1,4 @@
-import { Text, TextProps, TouchableOpacity, ViewProps, StyleSheet } from 'react-native'
+import { Text, TextProps, TouchableOpacity, ViewProps, StyleSheet, View } from 'react-native'
 import React, { ReactNode } from 'react'
 
 interface ButtonProps {
@@ -12,8 +12,10 @@ interface ButtonProps {
 const Button = ({ iconLeft, onPress, text, buttonStyles, textStyles }: ButtonProps) => {
   return (
     <TouchableOpacity activeOpacity={0.7} style={[styles.container, buttonStyles]} onPress={onPress}>
-      {iconLeft}
-      <Text style={[styles.text, textStyles]}>{text}</Text>
+      <View style={styles.iconLeft}>
+        {iconLeft}
+      </View>
+      <Text style={[styles.text, Boolean(iconLeft) && { marginLeft: 10 }, textStyles]}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -28,6 +30,11 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingVertical: 8,
     borderRadius: 25
+  },
+
+  iconLeft: {
+    position: 'absolute',
+    left: 10
   },
 
   text: {
