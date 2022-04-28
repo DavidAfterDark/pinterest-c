@@ -1,7 +1,11 @@
 import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacity, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
+
+//  icons
 import IconCircleXMark from '../../Svg/IconCircleXMark'
+import IconEye from '../../Svg/IconEye'
+import IconEyeOff from '../../Svg/IconEyeOff'
 
 interface inputProps {
   placeholder?: string,
@@ -30,34 +34,38 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
       control={control}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <View style={[styles.container, inputContainerStyles]}>
-          <TextInput
-            style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }]}
-            placeholder={placeholder}
-            placeholderTextColor='#6D6D6D'
-            secureTextEntry={secureTextEntry && !openEye}
-            onChangeText={onChange}
-            value={value}
-            onBlur={onBlur}
-            autoCapitalize={autoCapitalize}
-            blurOnSubmit={blurOnSubmit}
-            selectionColor='#C30026'
-          />
+        <View style={[inputContainerStyles]}>
+          <View style={[styles.container]}>
+            <TextInput
+              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }]}
+              placeholder={placeholder}
+              placeholderTextColor='#6D6D6D'
+              secureTextEntry={secureTextEntry && !openEye}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+              autoCapitalize={autoCapitalize}
+              blurOnSubmit={blurOnSubmit}
+              selectionColor='#C30026'
+            />
 
-          {value
-            ? (
-                <TouchableOpacity style={styles.iconCircleXMark} onPress={resetField}>
-                  <IconCircleXMark color='#6D6D6D' />
+            <View style={styles.iconRight}>
+              {secureTextEntry && (
+                <TouchableOpacity onPress={onPressEye} style={styles.eye}>
+                  {openEye ? <IconEye color='#6D6D6D' size={26} /> : <IconEyeOff color='#6D6D6D' size={28} />}
                 </TouchableOpacity>
-              )
-            : null
-          }
+              )}
 
-          {secureTextEntry && (
-            <TouchableOpacity onPress={onPressEye} style={styles.eye}>
-              {/* <Feather name={openEye ? 'eye' : 'eye-off'} size={20} color='#A2A4B0' /> */}
-            </TouchableOpacity>
-          )}
+              {value
+                ? (
+                    <TouchableOpacity style={styles.iconCircleXMark} onPress={resetField}>
+                      <IconCircleXMark color='#6D6D6D' />
+                    </TouchableOpacity>
+                  )
+                : null
+              }
+            </View>
+          </View>
 
           {error && <Text style={styles.errorMessage}>{error?.message}</Text>}
         </View>
@@ -81,34 +89,31 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
     fontWeight: 'bold',
-    letterSpacing: 0.7
-    // borderWidth: 1,
-    // borderColor: '#A2A4B0',
-    // paddingLeft: 15,
-    // fontSize: 16
+    letterSpacing: 0.7,
+    borderWidth: 1,
+    borderRadius: 25
   },
 
-  iconCircleXMark: {
+  iconRight: {
+    flexDirection: 'row',
     position: 'absolute',
-    // top: 5,
     right: 10
   },
 
-  // eye: {
-  //   width: 25,
-  //   height: 25,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   position: 'absolute',
-  //   alignSelf: 'flex-end',
-  //   textAlignVertical: 'center',
-  //   top: '25%',
-  //   right: 15,
-  //   zIndex: 500
-  // },
+  iconCircleXMark: {
+    marginLeft: 10
+  },
+
+  eye: {
+    width: 25,
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 
   errorMessage: {
     color: '#FF1D1D',
+    textAlign: 'center',
     marginTop: 10
   }
 })
