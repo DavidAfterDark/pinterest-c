@@ -37,7 +37,7 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
         <View style={[inputContainerStyles]}>
           <View style={[styles.container]}>
             <TextInput
-              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }]}
+              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }, secureTextEntry && { paddingRight: 75 }]}
               placeholder={placeholder}
               placeholderTextColor='#6D6D6D'
               secureTextEntry={secureTextEntry && !openEye}
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 50,
-    paddingHorizontal: 15,
+    paddingLeft: 15,
+    paddingRight: 40,
     fontWeight: 'bold',
     letterSpacing: 0.7,
     borderWidth: 1,
