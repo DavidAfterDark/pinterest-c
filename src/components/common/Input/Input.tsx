@@ -40,7 +40,7 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
         <View style={[inputContainerStyles]}>
           <View style={[styles.container, isDarkTheme && styles.containerDarkMode]}>
             <TextInput
-              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }, secureTextEntry && { paddingRight: 75 }, { color: isDarkTheme ? '#fff' : '#000' }]}
+              style={[styles.input, error && { borderColor: '#FF1D1D', paddingLeft: 15 }, secureTextEntry && { paddingRight: 75, paddingLeft: 15 }, { color: isDarkTheme ? '#fff' : '#000' }, inputStyles]}
               placeholder={placeholder}
               placeholderTextColor='#6D6D6D'
               secureTextEntry={secureTextEntry && !openEye}
@@ -69,8 +69,8 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
               }
             </View>
           </View>
-
           {error && <Text style={styles.errorMessage}>{error?.message}</Text>}
+
         </View>
       )}
     />
