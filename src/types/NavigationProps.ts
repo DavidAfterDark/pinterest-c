@@ -42,3 +42,23 @@ export type CreatePinScreenRouteProps = CreatePinScreenProps['route']
 type AlbumPickerScreenProps = NativeStackScreenProps<MainStackParamList, 'AlbumPicker'>
 export type AlbumPickerScreenNavigationProps = AlbumPickerScreenProps['navigation']
 export type AlbumPickerScreenRouteProps = AlbumPickerScreenProps['route']
+
+//  ---> Auth Stack
+export type AuthStackParamList = {
+  IntroScreen: undefined;
+
+  SignInScreen: {
+    email: string
+  };
+
+  SignUpScreen: {
+    email: string,
+    password: string,
+    repeatPassword: string
+  };
+}
+
+//  intro screen
+export type IntroScreen = NativeStackScreenProps<AuthStackParamList, 'IntroScreen'>
+export type IntroScreenNavigationProps = IntroScreen['navigation']
+export type IntroScreenRouteProps = IntroScreen['route']

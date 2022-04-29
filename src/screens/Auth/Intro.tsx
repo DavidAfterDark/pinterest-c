@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
+import { IntroScreenNavigationProps } from '../../types/NavigationProps'
 
 //  components
 import Header from '../../components/Intro/Header'
@@ -19,6 +20,8 @@ interface formData {
 const Intro = () => {
   const theme = useTheme()
 
+  const navigation = useNavigation<IntroScreenNavigationProps>()
+
   const { control, resetField, handleSubmit } = useForm<formData>()
 
   const cleanEmailField = () => {
@@ -26,6 +29,7 @@ const Intro = () => {
   }
 
   const onPressContinue = ({ email }: formData) => {
+    navigation.navigate('SignInScreen', { email })
     console.log(email.trim())
   }
 
