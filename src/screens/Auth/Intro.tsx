@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
 import { IntroScreenNavigationProps } from '../../types/NavigationProps'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 //  components
 import Header from '../../components/Intro/Header'
@@ -33,52 +34,56 @@ const Intro = () => {
     navigation.navigate('SignInScreen', { email })
   }
 
+  const goToSignUpScreen = () => navigation.navigate('SignUpScreen')
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
-      <Header />
-      <View style={styles.iconPinterestClonContainer}>
-        <IconPinterestClon />
-      </View>
-      <Text style={[styles.welcomeText, { color: theme.dark ? '#fff' : '#000' }]}>Te damos la bienvenida a Pinterest C</Text>
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+        <Header />
+        <View style={styles.iconPinterestClonContainer}>
+          <IconPinterestClon />
+        </View>
+        <Text style={[styles.welcomeText, { color: theme.dark ? '#fff' : '#000' }]}>Te damos la bienvenida a Pinterest C</Text>
 
-      <View style={styles.body}>
-        <Input
-          name='email'
-          control={control}
-          placeholder='Correo'
-          resetField={cleanEmailField}
-          rules={{
-            required: { value: true, message: 'Ingresa tu correo electronico' },
-            validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
-          }}
-          inputContainerStyles={styles.input}
-        />
+        <View style={styles.body}>
+          <Input
+            name='email'
+            control={control}
+            placeholder='Correo'
+            resetField={cleanEmailField}
+            rules={{
+              required: { value: true, message: 'Ingresa tu correo electronico' },
+              validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
+            }}
+            inputContainerStyles={styles.input}
+          />
 
-        <Button
-          text='Continuar'
-          buttonStyles={styles.buttonContinue}
-          onPress={handleSubmit(onPressContinue)}
-        />
+          <Button
+            text='Continuar'
+            buttonStyles={styles.buttonContinue}
+            onPress={handleSubmit(onPressContinue)}
+          />
 
-        <Button
-          text='Continuar con Facebook'
-          buttonStyles={styles.buttonFacebook}
-          onPress={() => console.log('facebook!')}
-          iconLeft={<IconFacebookRounded color='#fff' />}
-        />
+          <Button
+            text='Continuar con Facebook'
+            buttonStyles={styles.buttonFacebook}
+            onPress={() => console.log('facebook!')}
+            iconLeft={<IconFacebookRounded color='#fff' />}
+          />
 
-        <Button
-          text='Continuar con Google'
-          buttonStyles={styles.buttonGoogle}
-          onPress={() => console.log('google')}
-          iconLeft={<IconGoogle size={26} />}
-        />
-      </View>
+          <Button
+            text='Continuar con Google'
+            buttonStyles={styles.buttonGoogle}
+            onPress={() => console.log('google')}
+            iconLeft={<IconGoogle size={26} />}
+          />
+        </View>
 
-      <Text style={[styles.footerText, { color: theme.dark ? '#fff' : '#000' }]}>¿Aún no estás en Pinterest C?</Text>
-      <TouchableOpacity activeOpacity={0.7}>
-        <Text style={[styles.footerText, styles.signupText, { color: theme.dark ? '#fff' : '#000' }]}>Regístrate</Text>
-      </TouchableOpacity>
+        <Text style={[styles.footerText, { color: theme.dark ? '#fff' : '#000' }]}>¿Aún no estás en Pinterest C?</Text>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => goToSignUpScreen()}>
+          <Text style={[styles.footerText, styles.signupText, { color: theme.dark ? '#fff' : '#000' }]}>Regístrate</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }

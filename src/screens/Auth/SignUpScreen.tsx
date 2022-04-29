@@ -3,8 +3,9 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
-import { useTheme } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { SignUpScreenNavigationProps } from '../../types/NavigationProps'
 
 //  components
 import Button from '../../components/common/Button'
@@ -21,6 +22,8 @@ interface formData {
 const SignUpScreen = () => {
   const { control, resetField, handleSubmit } = useForm<formData>()
 
+  const navigation = useNavigation<SignUpScreenNavigationProps>()
+
   const isDarkMode = useTheme().dark
 
   const cleanUserNameField = () => resetField('username')
@@ -28,6 +31,8 @@ const SignUpScreen = () => {
   const cleanEmailField = () => resetField('email')
 
   const cleanPasswordField = () => resetField('password')
+
+  const goToSigInScreen = () => navigation.navigate('SignInScreen', { email: '' })
 
   const onPressSignIn = () => {
     console.log('press')
@@ -94,7 +99,7 @@ const SignUpScreen = () => {
           />
 
           <Text style={[styles.footerText]}>¿Y tienes cuenta?</Text>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => goToSigInScreen()}>
             <Text style={[styles.footerText, styles.signIngScreen]}>Inicia sesión</Text>
           </TouchableOpacity>
         </View>

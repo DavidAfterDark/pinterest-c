@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
 import { useTheme, useRoute } from '@react-navigation/native'
 import { SignInScreenRouteProps } from '../../types/NavigationProps'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 //  components
 import Button from '../../components/common/Button'
@@ -25,7 +26,7 @@ const SignInScreen = () => {
   const route = useRoute<SignInScreenRouteProps>()
 
   useEffect(() => {
-    setValue('email', route.params.email)
+    setValue('email', route.params?.email)
   }, [])
 
   const cleanEmailField = () => resetField('email')
@@ -38,58 +39,59 @@ const SignInScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.body}>
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.body}>
+          <Button
+            text='Continuar con Facebook'
+            buttonStyles={styles.buttonFacebook}
+            onPress={() => console.log('facebook!')}
+            iconLeft={<IconFacebookRounded color='#fff' />}
+          />
 
-        <Button
-          text='Continuar con Facebook'
-          buttonStyles={styles.buttonFacebook}
-          onPress={() => console.log('facebook!')}
-          iconLeft={<IconFacebookRounded color='#fff' />}
-        />
+          <Button
+            text='Continuar con Google'
+            buttonStyles={styles.buttonGoogle}
+            onPress={() => console.log('google')}
+            iconLeft={<IconGoogle size={26} />}
+          />
 
-        <Button
-          text='Continuar con Google'
-          buttonStyles={styles.buttonGoogle}
-          onPress={() => console.log('google')}
-          iconLeft={<IconGoogle size={26} />}
-        />
+          <Text style={[styles.or, { color: isDarkMode ? '#fff' : '#000' }]}>O</Text>
 
-        <Text style={[styles.or, { color: isDarkMode ? '#fff' : '#000' }]}>O</Text>
+          <Input
+            name='email'
+            control={control}
+            placeholder='Correo'
+            resetField={cleanEmailField}
+            rules={{
+              required: { value: true, message: 'Ingresa tu correo electronico' },
+              validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
+            }}
+            inputContainerStyles={styles.emailInput}
+          />
 
-        <Input
-          name='email'
-          control={control}
-          placeholder='Correo'
-          resetField={cleanEmailField}
-          rules={{
-            required: { value: true, message: 'Ingresa tu correo electronico' },
-            validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
-          }}
-          inputContainerStyles={styles.emailInput}
-        />
+          <Input
+            name='password'
+            control={control}
+            placeholder='Ingresa tu contraseña'
+            resetField={cleanPasswordField}
+            secureTextEntry
+            rules={{
+              required: { value: true, message: 'Ingresa tu contraseña' }
+            }}
+            inputContainerStyles={styles.passwordInput}
+          />
 
-        <Input
-          name='password'
-          control={control}
-          placeholder='Ingresa tu contraseña'
-          resetField={cleanPasswordField}
-          secureTextEntry
-          rules={{
-            required: { value: true, message: 'Ingresa tu contraseña' }
-          }}
-          inputContainerStyles={styles.passwordInput}
-        />
+          <Button
+            text='Continuar'
+            buttonStyles={styles.buttonContinue}
+            onPress={handleSubmit(onPressSignIn)}
+          />
 
-        <Button
-          text='Continuar'
-          buttonStyles={styles.buttonContinue}
-          onPress={handleSubmit(onPressSignIn)}
-        />
-
-        <TouchableOpacity activeOpacity={0.7}>
-          <Text style={styles.forgotPassword}>¿Has olvidado tu contraseña?</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Text style={styles.forgotPassword}>¿Has olvidado tu contraseña?</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
