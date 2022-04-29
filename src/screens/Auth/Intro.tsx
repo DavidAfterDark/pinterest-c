@@ -4,6 +4,7 @@ import { useTheme, useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
 import { IntroScreenNavigationProps } from '../../types/NavigationProps'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 //  components
 import Header from '../../components/Intro/Header'
@@ -33,7 +34,7 @@ const Intro = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.dark ? '#000' : '#fff' }]}>
       <Header />
       <View style={styles.iconPinterestClonContainer}>
         <IconPinterestClon />
@@ -78,7 +79,7 @@ const Intro = () => {
       <TouchableOpacity activeOpacity={0.7}>
         <Text style={[styles.footerText, styles.signupText, { color: theme.dark ? '#fff' : '#000' }]}>Regístrate</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
 
