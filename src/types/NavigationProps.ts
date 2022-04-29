@@ -62,3 +62,8 @@ export type AuthStackParamList = {
 export type IntroScreen = NativeStackScreenProps<AuthStackParamList, 'IntroScreen'>
 export type IntroScreenNavigationProps = IntroScreen['navigation']
 export type IntroScreenRouteProps = IntroScreen['route']
+
+//  SignIn screen
+export type SignInScreen = NativeStackScreenProps<AuthStackParamList, 'SignInScreen'>
+export type SignInScreenNavigationProps = SignInScreen['navigation']
+export type SignInScreenRouteProps = SignInScreen['route']
