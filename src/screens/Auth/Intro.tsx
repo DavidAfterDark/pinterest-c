@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useTheme } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
@@ -70,6 +70,11 @@ const Intro = () => {
           iconLeft={<IconGoogle size={26} />}
         />
       </View>
+
+      <Text style={[styles.footerText, { color: theme.dark ? '#fff' : '#000' }]}>¿Aún no estás en Pinterest C?</Text>
+      <TouchableOpacity activeOpacity={0.7}>
+        <Text style={[styles.footerText, styles.signupText, { color: theme.dark ? '#fff' : '#000' }]}>Regístrate</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -94,7 +99,8 @@ const styles = StyleSheet.create({
   body: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 25
+    marginTop: 25,
+    marginBottom: 20
   },
 
   input: {
@@ -112,6 +118,16 @@ const styles = StyleSheet.create({
 
   buttonGoogle: {
     backgroundColor: '#4d4d4d'
+  },
+
+  footerText: {
+    textAlign: 'center'
+  },
+
+  signupText: {
+    marginTop: 5,
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 
 })
