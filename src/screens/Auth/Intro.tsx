@@ -30,7 +30,6 @@ const Intro = () => {
 
   const onPressContinue = ({ email }: formData) => {
     navigation.navigate('SignInScreen', { email })
-    console.log(email.trim())
   }
 
   return (
