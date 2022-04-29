@@ -51,7 +51,9 @@ export type AuthStackParamList = {
     email: string
   };
 
-  SignUpScreen: undefined
+  SignUpScreen: undefined,
+
+  ForgotPassword: undefined
 }
 
 //  intro screen

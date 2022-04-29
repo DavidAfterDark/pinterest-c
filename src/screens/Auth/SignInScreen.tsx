@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
-import { useTheme, useRoute } from '@react-navigation/native'
-import { SignInScreenRouteProps } from '../../types/NavigationProps'
+import { useTheme, useRoute, useNavigation } from '@react-navigation/native'
+import { SignInScreenRouteProps, SignInScreenNavigationProps } from '../../types/NavigationProps'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 //  components
@@ -21,6 +21,8 @@ interface formData {
 const SignInScreen = () => {
   const { control, resetField, handleSubmit, setValue } = useForm<formData>()
 
+  const navigation = useNavigation<SignInScreenNavigationProps>()
+
   const isDarkMode = useTheme().dark
 
   const route = useRoute<SignInScreenRouteProps>()
@@ -32,6 +34,8 @@ const SignInScreen = () => {
   const cleanEmailField = () => resetField('email')
 
   const cleanPasswordField = () => resetField('password')
+
+  const goToForgotPassword = () => navigation.navigate('ForgotPassword')
 
   const onPressSignIn = () => {
     console.log('press')
@@ -87,7 +91,7 @@ const SignInScreen = () => {
             onPress={handleSubmit(onPressSignIn)}
           />
 
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => goToForgotPassword()}>
             <Text style={styles.forgotPassword}>¿Has olvidado tu contraseña?</Text>
           </TouchableOpacity>
         </View>

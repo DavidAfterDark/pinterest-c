@@ -6,17 +6,11 @@ import { AuthStackParamList } from '../types/NavigationProps'
 import Intro from '../screens/Auth/Intro'
 import SignInScreen from '../screens/Auth/SignInScreen'
 import SignUpScreen from '../screens/Auth/SignUpScreen'
-
-//  icons
-import IconXMark from '../components/Svg/IconXMark'
-import { Pressable } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import ForgotPassword from '../screens/Auth/ForgotPasswordScreen'
 
 const Stack = createNativeStackNavigator<AuthStackParamList>()
 
 const AuthStack = () => {
-  const navigation = useNavigation()
-
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -32,12 +26,7 @@ const AuthStack = () => {
           title: 'Iniciar sesión',
           headerTitleStyle: { fontSize: 18 },
           headerTitleAlign: 'center',
-          headerBackVisible: false,
-          // headerLeft: () => (
-          //   <Pressable style={{ paddingHorizontal: 6, paddingVertical: 3 }} onPress={() => navigation.goBack()} >
-          //     <IconXMark color='#6D6D6D' size={20} />
-          //   </Pressable>
-          // )
+          headerBackVisible: false
         }}
       />
 
@@ -48,12 +37,17 @@ const AuthStack = () => {
           title: 'Registro de usuario',
           headerTitleStyle: { fontSize: 18 },
           headerTitleAlign: 'center',
-          headerBackVisible: false,
-          // headerLeft: () => (
-          //   <Pressable style={{ paddingHorizontal: 6, paddingVertical: 3 }} onPress={() => navigation.goBack()} >
-          //     <IconXMark color='#6D6D6D' size={20} />
-          //   </Pressable>
-          // )
+          headerBackVisible: false
+        }}
+      />
+
+      <Stack.Screen
+        name='ForgotPassword'
+        component={ForgotPassword}
+        options={{
+          title: 'Restablecer contraseña',
+          headerTitleStyle: { fontSize: 18 },
+          headerTitleAlign: 'center'
         }}
       />
     </Stack.Navigator>
