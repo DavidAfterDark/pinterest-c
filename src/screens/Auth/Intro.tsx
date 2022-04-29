@@ -26,7 +26,7 @@ const Intro = () => {
   }
 
   const onPressContinue = ({ email }: formData) => {
-    console.log(email)
+    console.log(email.trim())
   }
 
   return (
@@ -45,7 +45,7 @@ const Intro = () => {
           resetField={cleanEmailField}
           rules={{
             required: { value: true, message: 'Ingresa tu correo electronico' },
-            pattern: { value: EMAIL_REGEX, message: 'Este correo electronico no parece ser válido' }
+            validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
           }}
           inputContainerStyles={styles.input}
         />
