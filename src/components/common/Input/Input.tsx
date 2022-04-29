@@ -1,6 +1,7 @@
 import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacity, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { useTheme } from '@react-navigation/native'
 
 //  icons
 import IconCircleXMark from '../../Svg/IconCircleXMark'
@@ -22,6 +23,8 @@ interface inputProps {
 }
 
 const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputContainerStyles, secureTextEntry = false, onBlur, autoCapitalize, blurOnSubmit, resetField }: inputProps) => {
+  const isDarkTheme = useTheme().dark
+
   const [openEye, setOpenEye] = useState(false)
 
   const onPressEye = () => {
@@ -35,9 +38,9 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <View style={[inputContainerStyles]}>
-          <View style={[styles.container]}>
+          <View style={[styles.container, isDarkTheme && styles.containerDarkMode]}>
             <TextInput
-              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }, secureTextEntry && { paddingRight: 75 }]}
+              style={[styles.input, inputStyles, error && { borderColor: '#FF1D1D' }, secureTextEntry && { paddingRight: 75 }, { color: isDarkTheme ? '#fff' : '#000' }]}
               placeholder={placeholder}
               placeholderTextColor='#6D6D6D'
               secureTextEntry={secureTextEntry && !openEye}
@@ -46,7 +49,7 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
               onBlur={onBlur}
               autoCapitalize={autoCapitalize}
               blurOnSubmit={blurOnSubmit}
-              selectionColor='#C30026'
+              selectionColor={isDarkTheme ? '#C30026' : '#000'}
             />
 
             <View style={styles.iconRight}>
@@ -79,9 +82,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 270,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 50,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: '#cdcdcd',
+    borderWidth: 2
+  },
+
+  containerDarkMode: {
     backgroundColor: '#303030',
-    alignItems: 'center'
+    borderWidth: 0
   },
 
   input: {
@@ -90,9 +100,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 40,
     fontWeight: 'bold',
-    letterSpacing: 0.7,
-    borderWidth: 1,
-    borderRadius: 25
+    letterSpacing: 0.7
   },
 
   iconRight: {
