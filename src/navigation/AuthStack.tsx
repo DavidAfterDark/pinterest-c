@@ -33,7 +33,11 @@ const AuthStack = () => {
           headerTitleStyle: { fontSize: 18 },
           headerTitleAlign: 'center',
           headerBackVisible: false,
-          headerLeft: () => <Pressable style={{ padding: 3 }} onPress={() => navigation.goBack()}><IconXMark color='#6D6D6D' size={20} /></Pressable>
+          headerLeft: () => (
+            <Pressable style={{ paddingHorizontal: 6, paddingVertical: 3 }} onPress={() => navigation.goBack()} >
+              <IconXMark color='#6D6D6D' size={20} />
+            </Pressable>
+          )
         }}
       />
 
