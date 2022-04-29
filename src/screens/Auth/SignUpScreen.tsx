@@ -114,12 +114,10 @@ const styles = StyleSheet.create({
   },
 
   body: {
-    borderTopWidth: 1,
-    borderColor: '#343434',
-    marginHorizontal: 10,
-    marginTop: 10,
+    marginTop: 15,
     alignItems: 'center',
-    paddingTop: 15
+    paddingTop: 15,
+    paddingBottom: 20
   },
 
   input: {
