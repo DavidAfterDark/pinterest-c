@@ -98,9 +98,9 @@ const SignUpScreen = () => {
             iconLeft={<IconGoogle size={26} />}
           />
 
-          <Text style={[styles.footerText]}>¿Y tienes cuenta?</Text>
+          <Text style={[styles.footerText, { color: isDarkMode ? '#fff' : '#000' }]}>¿Y tienes cuenta?</Text>
           <TouchableOpacity activeOpacity={0.7} onPress={() => goToSigInScreen()}>
-            <Text style={[styles.footerText, styles.signIngScreen]}>Inicia sesión</Text>
+            <Text style={[styles.footerText, styles.signIngScreen, { color: isDarkMode ? '#fff' : '#000' }]}>Inicia sesión</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
