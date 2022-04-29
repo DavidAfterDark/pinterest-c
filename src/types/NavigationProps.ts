@@ -51,11 +51,7 @@ export type AuthStackParamList = {
     email: string
   };
 
-  SignUpScreen: {
-    email: string,
-    password: string,
-    repeatPassword: string
-  };
+  SignUpScreen: undefined
 }
 
 //  intro screen
@@ -67,3 +63,8 @@ export type IntroScreenRouteProps = IntroScreen['route']
 export type SignInScreen = NativeStackScreenProps<AuthStackParamList, 'SignInScreen'>
 export type SignInScreenNavigationProps = SignInScreen['navigation']
 export type SignInScreenRouteProps = SignInScreen['route']
+
+//  SignUp screen
+export type SignUpScreen = NativeStackScreenProps<AuthStackParamList, 'SignUpScreen'>
+export type SignUpScreenNavigationProps = SignUpScreen['navigation']
+export type SignUpScreenRouteProps = SignUpScreen['route']

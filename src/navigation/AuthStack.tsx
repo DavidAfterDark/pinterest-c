@@ -44,7 +44,17 @@ const AuthStack = () => {
       <Stack.Screen
         name='SignUpScreen'
         component={SignUpScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: 'Registro de usuario',
+          headerTitleStyle: { fontSize: 18 },
+          headerTitleAlign: 'center',
+          headerBackVisible: false,
+          headerLeft: () => (
+            <Pressable style={{ paddingHorizontal: 6, paddingVertical: 3 }} onPress={() => navigation.goBack()} >
+              <IconXMark color='#6D6D6D' size={20} />
+            </Pressable>
+          )
+        }}
       />
     </Stack.Navigator>
   )
