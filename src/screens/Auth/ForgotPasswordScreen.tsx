@@ -14,11 +14,13 @@ interface formData {
 }
 
 const ForgotPassword = () => {
-  const { control, handleSubmit, resetField } = useForm<formData>()
+  const { control, handleSubmit, resetField, watch } = useForm<formData>()
 
   const isDarkTheme = useTheme().dark
 
   const cleanField = () => resetField('usernameOrEmail')
+
+  const field = watch('usernameOrEmail')
 
   const onPressSend = () => {
     console.log('press send')
@@ -29,11 +31,11 @@ const ForgotPassword = () => {
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           <Text style={[styles.title, { color: isDarkTheme ? '#fff' : '#000' }]}>Encontremos tu cuenta de Pinterest C</Text>
-          <Text style={[styles.subTitle, { color: isDarkTheme ? '#fff' : '#000' }]}>¿Cual es tu correo o nombre de usuario?</Text>
+          <Text style={[styles.subTitle, { color: isDarkTheme ? '#fff' : '#000' }]}>Escribenos cual es tu Correo o nombre de usuario</Text>
           <Input
             name='usernameOrEmail'
             control={control}
-            placeholder='correo o nombre de usuario'
+            placeholder='Correo o nombre de usuario'
             resetField={cleanField}
             rules={{
               required: { value: true, message: 'Ingresa tu correo o nombre de usuario' }
@@ -45,7 +47,7 @@ const ForgotPassword = () => {
             text='Continuar'
             onPress={handleSubmit(onPressSend)}
             buttonStyles={styles.button}
-            disable={true}
+            disable={!field}
           />
 
         </View>
