@@ -6,16 +6,17 @@ interface ButtonProps {
   onPress: () => void;
   text: string;
   buttonStyles?: ViewProps['style'];
-  textStyles?: TextProps['style']
+  textStyles?: TextProps['style'];
+  disable?: boolean;
 }
 
-const Button = ({ iconLeft, onPress, text, buttonStyles, textStyles }: ButtonProps) => {
+const Button = ({ iconLeft, onPress, text, buttonStyles, textStyles, disable }: ButtonProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={[styles.container, buttonStyles]} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.7} style={[styles.container, disable && styles.disableContainer, buttonStyles]} onPress={onPress} disabled={disable}>
       <View style={styles.iconLeft}>
         {iconLeft}
       </View>
-      <Text style={[styles.text, Boolean(iconLeft) && { marginLeft: 10 }, textStyles]}>{text}</Text>
+      <Text style={[styles.text, Boolean(iconLeft) && { marginLeft: 10 }, disable && styles.disableText, textStyles]}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -32,6 +33,10 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
 
+  disableContainer: {
+    backgroundColor: '#a9a9a9'
+  },
+
   iconLeft: {
     position: 'absolute',
     left: 10
@@ -43,6 +48,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold'
+  },
+
+  disableText: {
+    color: '#343434'
   }
 })
 

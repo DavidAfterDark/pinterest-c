@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, StyleSheet, TextInputProps, ViewProps, TouchableOpacity, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { useTheme } from '@react-navigation/native'
@@ -12,6 +12,7 @@ interface inputProps {
   placeholder?: string,
   inputStyles?: TextInputProps['style'],
   inputContainerStyles?: TextInputProps['style'],
+  containerStyles?: ViewProps['style'],
   secureTextEntry?: boolean,
   onBlur?: TextInputProps['onBlur'],
   control: any,
@@ -22,7 +23,7 @@ interface inputProps {
   resetField: () => void
 }
 
-const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputContainerStyles, secureTextEntry = false, onBlur, autoCapitalize, blurOnSubmit, resetField }: inputProps) => {
+const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputContainerStyles, containerStyles, secureTextEntry = false, onBlur, autoCapitalize, blurOnSubmit, resetField }: inputProps) => {
   const isDarkTheme = useTheme().dark
 
   const [openEye, setOpenEye] = useState(false)
@@ -37,10 +38,10 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
       control={control}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <View style={[inputContainerStyles]}>
-          <View style={[styles.container, isDarkTheme && styles.containerDarkMode]}>
+        <View style={[containerStyles]}>
+          <View style={[styles.container, isDarkTheme && styles.containerDarkMode, error && { borderWidth: 1, borderColor: '#FF1D1D' }, inputContainerStyles]}>
             <TextInput
-              style={[styles.input, error && { borderColor: '#FF1D1D', paddingLeft: 15 }, secureTextEntry && { paddingRight: 75, paddingLeft: 15 }, { color: isDarkTheme ? '#fff' : '#000' }, inputStyles]}
+              style={[styles.input, secureTextEntry && { paddingRight: 75 }, { color: isDarkTheme ? '#fff' : '#000' }, inputStyles]}
               placeholder={placeholder}
               placeholderTextColor='#6D6D6D'
               secureTextEntry={secureTextEntry && !openEye}

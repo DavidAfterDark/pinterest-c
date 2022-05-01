@@ -50,7 +50,7 @@ const SignUpScreen = () => {
             rules={{
               required: { value: true, message: 'Ingresa tu nombre de usuario' }
             }}
-            inputContainerStyles={styles.input}
+            containerStyles={styles.input}
           />
 
           <Input
@@ -62,7 +62,7 @@ const SignUpScreen = () => {
               required: { value: true, message: 'Ingresa tu correo electronico' },
               validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
             }}
-            inputContainerStyles={styles.input}
+            containerStyles={styles.input}
           />
 
           <Input
@@ -74,7 +74,7 @@ const SignUpScreen = () => {
             rules={{
               required: { value: true, message: 'Ingresa tu contraseña' }
             }}
-            inputContainerStyles={styles.passwordInput}
+            containerStyles={styles.passwordInput}
           />
 
           <Button

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -38,12 +38,14 @@ const ForgotPassword = () => {
             rules={{
               required: { value: true, message: 'Ingresa tu correo o nombre de usuario' }
             }}
+            inputContainerStyles={{ width: '100%' }}
           />
 
           <Button
             text='Continuar'
             onPress={handleSubmit(onPressSend)}
             buttonStyles={styles.button}
+            disable={true}
           />
 
         </View>
