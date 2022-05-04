@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pinterestc-staging-181956-authRole",
+      "UnauthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-staging-181956-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-staging-181956-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pinterestc-staging-181956-deployment",
+      "UnauthRoleName": "amplify-pinterestc-staging-181956-unauthRole",
+      "StackName": "amplify-pinterestc-staging-181956",
+      "StackId": "arn:aws:cloudformation:us-east-2:315119749632:stack/amplify-pinterestc-staging-181956/a32691b0-cb0d-11ec-b28d-06a4142ad0b6",
+      "AmplifyAppId": "d3kqma3y2jaxrv"
+    },
+    "categories": {
+      "auth": {
+        "PinterestC": {}
+      }
+    }
+  }
+}
