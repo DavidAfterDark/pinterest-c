@@ -39,7 +39,7 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <View style={[containerStyles]}>
-          <View style={[styles.container, isDarkTheme && styles.containerDarkMode, error && { borderWidth: 1, borderColor: '#FF1D1D' }, inputContainerStyles]}>
+          <View style={[styles.containerInput, isDarkTheme && styles.containerInputDarkMode, error && { borderWidth: 1, borderColor: '#FF1D1D' }, inputContainerStyles]}>
             <TextInput
               style={[styles.input, secureTextEntry && { paddingRight: 75 }, { color: isDarkTheme ? '#fff' : '#000' }, inputStyles]}
               placeholder={placeholder}
@@ -79,7 +79,7 @@ const Input = ({ name, control, rules = {}, placeholder, inputStyles, inputConta
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerInput: {
     flexDirection: 'row',
     width: 270,
     height: 50,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 2
   },
 
-  containerDarkMode: {
+  containerInputDarkMode: {
     backgroundColor: '#303030',
     borderWidth: 0
   },
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: '#FF1D1D',
     textAlign: 'center',
-    marginTop: 10
+    marginTop: 10,
+    width: 270
   }
 })
 

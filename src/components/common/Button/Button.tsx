@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   disableContainer: {
-    backgroundColor: '#a9a9a9'
+    backgroundColor: '#cdcdcd'
   },
 
   iconLeft: {
