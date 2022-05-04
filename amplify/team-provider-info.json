@@ -16,5 +16,23 @@
         "PinterestC": {}
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pinterestc-dev-145253-authRole",
+      "UnauthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-dev-145253-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-dev-145253-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pinterestc-dev-145253-deployment",
+      "UnauthRoleName": "amplify-pinterestc-dev-145253-unauthRole",
+      "StackName": "amplify-pinterestc-dev-145253",
+      "StackId": "arn:aws:cloudformation:us-east-2:315119749632:stack/amplify-pinterestc-dev-145253/71605de0-cbdb-11ec-aad9-0a1a3a6c4050",
+      "AmplifyAppId": "d3kqma3y2jaxrv"
+    },
+    "categories": {
+      "auth": {
+        "PinterestC": {}
+      }
+    }
   }
 }

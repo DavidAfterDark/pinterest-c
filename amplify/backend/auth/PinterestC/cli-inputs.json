@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "pinter1ae87943",
+    "resourceNameTruncated": "pinter96bd1fbc",
     "userPoolName": "PinterestC",
     "autoVerifiedAttributes": [
       "email"
@@ -27,9 +27,9 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Pinter1ae87943_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Pinter96bd1fbc_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "1ae87943",
+    "sharedId": "96bd1fbc",
     "resourceName": "PinterestC",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",

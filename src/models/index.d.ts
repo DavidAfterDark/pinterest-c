@@ -27,7 +27,7 @@ export declare class User {
   readonly id: string;
   readonly email: string;
   readonly name?: string | null;
-  readonly userName?: string | null;
+  readonly username?: string | null;
   readonly image?: string | null;
   readonly Pins?: (Pin | null)[] | null;
   readonly createdAt?: string | null;

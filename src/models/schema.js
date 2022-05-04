@@ -13,7 +13,7 @@ export const schema = {
                 "image": {
                     "name": "image",
                     "isArray": false,
-                    "type": "AWSURL",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -95,7 +95,7 @@ export const schema = {
                 "email": {
                     "name": "email",
                     "isArray": false,
-                    "type": "AWSEmail",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -106,8 +106,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "userName": {
-                    "name": "userName",
+                "username": {
+                    "name": "username",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -179,5 +179,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "8792cc6b4b7e497641c7edce2853913e"
+    "version": "97b707de11dadda99a0808affeceead5"
 };

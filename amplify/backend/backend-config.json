@@ -49,5 +49,12 @@
         }
       }
     }
+  },
+  "function": {
+    "PinterestCPostSignUp": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
   }
 }
