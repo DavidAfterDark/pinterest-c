@@ -3,7 +3,17 @@
     "PinterestC": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "PinterestCPreSignup",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
@@ -51,7 +61,7 @@
     }
   },
   "function": {
-    "PinterestCPostSignUp": {
+    "PinterestCPreSignup": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

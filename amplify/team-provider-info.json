@@ -9,29 +9,18 @@
       "UnauthRoleName": "amplify-pinterestc-staging-181956-unauthRole",
       "StackName": "amplify-pinterestc-staging-181956",
       "StackId": "arn:aws:cloudformation:us-east-2:315119749632:stack/amplify-pinterestc-staging-181956/a32691b0-cb0d-11ec-b28d-06a4142ad0b6",
-      "AmplifyAppId": "d3kqma3y2jaxrv"
+      "AmplifyAppId": "d3kqma3y2jaxrv",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-pinterestc-staging-181956-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
         "PinterestC": {}
-      }
-    }
-  },
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-pinterestc-dev-145253-authRole",
-      "UnauthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-dev-145253-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::315119749632:role/amplify-pinterestc-dev-145253-authRole",
-      "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-pinterestc-dev-145253-deployment",
-      "UnauthRoleName": "amplify-pinterestc-dev-145253-unauthRole",
-      "StackName": "amplify-pinterestc-dev-145253",
-      "StackId": "arn:aws:cloudformation:us-east-2:315119749632:stack/amplify-pinterestc-dev-145253/71605de0-cbdb-11ec-aad9-0a1a3a6c4050",
-      "AmplifyAppId": "d3kqma3y2jaxrv"
-    },
-    "categories": {
-      "auth": {
-        "PinterestC": {}
+      },
+      "function": {
+        "PinterestCPreSignup": {
+          "deploymentBucketName": "amplify-pinterestc-staging-181956-deployment",
+          "s3Key": "amplify-builds/PinterestCPreSignup-4336534e4a4a566b3457-build.zip"
+        }
       }
     }
   }
