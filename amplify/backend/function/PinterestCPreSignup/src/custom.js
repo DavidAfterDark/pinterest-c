@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk')
+const aws = require('aws-sdk')
 const ddb = new aws.DynamoDB()
 
 const tableName = process.env.USERTABLE

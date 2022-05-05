@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "PinterestC",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-6bd6d34a-1367-4c37-a094-2364b8991fb1/amplify/backend/api/PinterestC/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-3800b1a4-7d46-4c53-adf9-881267bdf61c/amplify/backend/api/PinterestC/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

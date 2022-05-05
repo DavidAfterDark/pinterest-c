@@ -12,5 +12,4 @@ type User @model @auth(rules: [{allow: public}]) {
   username: String
   image: String
   Pins: [Pin] @hasMany(indexName: "byUser", fields: ["id"])
-}
- 
+} 
