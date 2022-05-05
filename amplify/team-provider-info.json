@@ -19,7 +19,7 @@
       "function": {
         "PinterestCPreSignup": {
           "deploymentBucketName": "amplify-pinterestc-staging-181956-deployment",
-          "s3Key": "amplify-builds/PinterestCPreSignup-4336534e4a4a566b3457-build.zip"
+          "s3Key": "amplify-builds/PinterestCPreSignup-486c6678674c44375944-build.zip"
         }
       }
     }
