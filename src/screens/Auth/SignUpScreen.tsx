@@ -6,12 +6,14 @@ import { EMAIL_REGEX } from '../../constant'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SignUpScreenNavigationProps } from '../../types/NavigationProps'
+import { useAuth } from '../../hooks/useAuth'
 
 //  components
 import Button from '../../components/common/Button'
 import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
 import IconGoogle from '../../components/Svg/IconGoogle'
 import Input from '../../components/common/Input'
+import NotificationModal from '../../components/common/NotificationModal'
 
 interface formData {
   username: string,
@@ -26,7 +28,7 @@ const SignUpScreen = () => {
 
   const isDarkMode = useTheme().dark
 
-  const cleanUserNameField = () => resetField('username')
+  const { signUp, isLoading } = useAuth()
 
   const cleanEmailField = () => resetField('email')
 
@@ -34,8 +36,14 @@ const SignUpScreen = () => {
 
   const goToSigInScreen = () => navigation.navigate('SignInScreen', { email: '' })
 
-  const onPressSignIn = () => {
-    console.log('press')
+  const onRegisterPressed = async (data: formData) => {
+    const { email, password } = data
+
+    if (isLoading) return
+
+    await signUp({ email, password })
+
+    navigation.navigate('SignInScreen', { email })
   }
 
   return (
@@ -43,23 +51,12 @@ const SignUpScreen = () => {
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           <Input
-            name='username'
-            control={control}
-            placeholder='Nombre de usuario'
-            resetField={cleanUserNameField}
-            rules={{
-              required: { value: true, message: 'Ingresa tu nombre de usuario' }
-            }}
-            containerStyles={styles.input}
-          />
-
-          <Input
             name='email'
             control={control}
             placeholder='Correo'
             resetField={cleanEmailField}
             rules={{
-              required: { value: true, message: 'Ingresa tu correo electronico' },
+              required: { value: true, message: '¡Te faltó algo! No te olvides de agregar tu correo electrónico.' },
               validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
             }}
             containerStyles={styles.input}
@@ -72,14 +69,15 @@ const SignUpScreen = () => {
             resetField={cleanPasswordField}
             secureTextEntry
             rules={{
-              required: { value: true, message: 'Ingresa tu contraseña' }
+              required: { value: true, message: 'Ingresa tu contraseña' },
+              minLength: { value: 8, message: 'La contraseña es demasiado corta. Debe tener 6 caracteres o más.' }
             }}
             containerStyles={styles.passwordInput}
           />
 
           <Button
-            text='Continuar'
-            onPress={handleSubmit(onPressSignIn)}
+            text='Registrar'
+            onPress={handleSubmit(onRegisterPressed)}
           />
 
           <Text style={[styles.or, { color: isDarkMode ? '#fff' : '#000' }]}>O</Text>
@@ -102,6 +100,8 @@ const SignUpScreen = () => {
           <TouchableOpacity activeOpacity={0.7} onPress={() => goToSigInScreen()}>
             <Text style={[styles.footerText, styles.signIngScreen, { color: isDarkMode ? '#fff' : '#000' }]}>Inicia sesión</Text>
           </TouchableOpacity>
+
+          <NotificationModal isVisible={isLoading} message='Cargando' loading />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
