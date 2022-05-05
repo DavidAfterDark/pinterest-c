@@ -25,7 +25,7 @@ exports.handler = async (event) => {
     email: { S: email },
     image: null,
     name: { S: email.slice(0, arroba) },
-    username: { S: `@${email.slice(0, arroba)}` },
+    username: { S: email.slice(0, arroba) },
     __typename: { S: 'User' },
     createdAt: { S: now.toISOString() },
     updatedAt: { S: now.toISOString() },
