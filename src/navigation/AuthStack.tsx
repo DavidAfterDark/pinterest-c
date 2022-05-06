@@ -24,7 +24,7 @@ const AuthStack = () => {
         component={SignInScreen}
         options={{
           title: 'Iniciar sesión',
-          headerTitleStyle: { fontSize: 18 },
+          headerTitleStyle: { fontSize: 22 },
           headerTitleAlign: 'center',
           headerBackVisible: false
         }}
@@ -35,7 +35,7 @@ const AuthStack = () => {
         component={SignUpScreen}
         options={{
           title: 'Registro de usuario',
-          headerTitleStyle: { fontSize: 18 },
+          headerTitleStyle: { fontSize: 22 },
           headerTitleAlign: 'center',
           headerBackVisible: false
         }}
@@ -46,7 +46,7 @@ const AuthStack = () => {
         component={ForgotPassword}
         options={{
           title: 'Restablecer contraseña',
-          headerTitleStyle: { fontSize: 18 },
+          headerTitleStyle: { fontSize: 22 },
           headerTitleAlign: 'center'
         }}
       />

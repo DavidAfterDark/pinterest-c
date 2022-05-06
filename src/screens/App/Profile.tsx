@@ -8,11 +8,14 @@ import MasonryList from '../../components/common/MasonryList'
 
 //  dummy data
 import pins from '../../../assets/dummy-data/pins'
+import { useAuth } from '../../hooks/useAuth'
 
 const Profile = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
 
   const theme = useTheme()
+
+  const { signOut } = useAuth()
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -30,6 +33,8 @@ const Profile = () => {
 
           <Text style={[styles.name, { color: theme.colors.text }]}>David</Text>
           <Text style={styles.username}>@david.dev</Text>
+
+          <Text style={{ color: 'red' }} onPress={() => signOut()}>cerrar sesion</Text>
 
           <View style={styles.followersContainer}>
             <Text style={[styles.followers, { color: theme.colors.text }]}>101 Seguidores</Text>

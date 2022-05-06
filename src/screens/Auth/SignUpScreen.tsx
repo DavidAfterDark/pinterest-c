@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
@@ -13,12 +13,18 @@ import Button from '../../components/common/Button'
 import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
 import IconGoogle from '../../components/Svg/IconGoogle'
 import Input from '../../components/common/Input'
+import LoadingModal from '../../components/common/LoadingModal'
 import NotificationModal from '../../components/common/NotificationModal'
 
 interface formData {
   username: string,
   email: string,
   password: string
+}
+
+interface modalProps {
+  show: boolean,
+  message: string
 }
 
 const SignUpScreen = () => {
@@ -28,7 +34,7 @@ const SignUpScreen = () => {
 
   const isDarkMode = useTheme().dark
 
-  const { signUp, isLoading } = useAuth()
+  const { signUp, signUpIsLoading } = useAuth()
 
   const cleanEmailField = () => resetField('email')
 
@@ -36,14 +42,27 @@ const SignUpScreen = () => {
 
   const goToSigInScreen = () => navigation.navigate('SignInScreen', { email: '' })
 
+  const [modal, setModal] = useState<modalProps>({ show: false, message: '' })
+
   const onRegisterPressed = async (data: formData) => {
     const { email, password } = data
 
-    if (isLoading) return
+    if (signUpIsLoading) return
 
-    await signUp({ email, password })
+    signUp({ email, password }, {
+      onSuccess: (result) => {
+        console.log(result)
+        navigation.navigate('SignInScreen', { email })
+      },
 
-    navigation.navigate('SignInScreen', { email })
+      onError: (error) => {
+        console.log(error)
+        setModal({
+          message: 'Oh no! Ya existe una cuenta con ese correo electronico',
+          show: true
+        })
+      }
+    })
   }
 
   return (
@@ -101,7 +120,8 @@ const SignUpScreen = () => {
             <Text style={[styles.footerText, styles.signIngScreen, { color: isDarkMode ? '#fff' : '#000' }]}>Inicia sesión</Text>
           </TouchableOpacity>
 
-          <NotificationModal isVisible={isLoading} message='Cargando' loading />
+          {signUpIsLoading && <LoadingModal isVisible={signUpIsLoading} />}
+          {modal.show && <NotificationModal isVisible={modal.show} isError message={modal.message} onCloseModal={() => setModal({ show: false, message: '' })} />}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -1,21 +1,29 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
 import { useTheme, useRoute, useNavigation } from '@react-navigation/native'
 import { SignInScreenRouteProps, SignInScreenNavigationProps } from '../../types/NavigationProps'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useAuth } from '../../hooks/useAuth'
 
 //  components
 import Button from '../../components/common/Button'
 import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
 import IconGoogle from '../../components/Svg/IconGoogle'
 import Input from '../../components/common/Input'
+import LoadingModal from '../../components/common/LoadingModal'
+import NotificationModal from '../../components/common/NotificationModal'
 
 interface formData {
   email: string,
   password: string
+}
+
+interface modalProps {
+  show: boolean,
+  message: string
 }
 
 const SignInScreen = () => {
@@ -27,6 +35,8 @@ const SignInScreen = () => {
 
   const route = useRoute<SignInScreenRouteProps>()
 
+  const { signIn, signInIsLoading } = useAuth()
+
   useEffect(() => {
     setValue('email', route.params?.email)
   }, [])
@@ -37,8 +47,23 @@ const SignInScreen = () => {
 
   const goToForgotPassword = () => navigation.navigate('ForgotPassword')
 
-  const onPressSignIn = () => {
-    console.log('press')
+  const [modal, setModal] = useState<modalProps>({ show: false, message: '' })
+
+  const onPressSignIn = async (data: formData) => {
+    if (signInIsLoading) return
+
+    const { email, password } = data
+
+    signIn({ email, password }, {
+      onError: (error) => {
+        console.log(error)
+
+        setModal({
+          show: true,
+          message: 'Oh no! correo electronico o contraseña invalidos'
+        })
+      }
+    })
   }
 
   return (
@@ -94,6 +119,10 @@ const SignInScreen = () => {
           <TouchableOpacity activeOpacity={0.7} onPress={() => goToForgotPassword()}>
             <Text style={styles.forgotPassword}>¿Has olvidado tu contraseña?</Text>
           </TouchableOpacity>
+
+          {signInIsLoading && <LoadingModal isVisible={signInIsLoading} />}
+          {modal.show && <NotificationModal isVisible={modal.show} isError message={modal.message} onCloseModal={() => setModal({ show: false, message: '' })} />}
+
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
