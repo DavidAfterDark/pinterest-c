@@ -1,8 +1,6 @@
-import { Auth, DataStore } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useEffect, useState } from 'react'
-import { USER_AUTH } from '../constant'
-import { User } from '../models'
+import { USER_AUTH, USER_DATA } from '../constant'
 
 interface signUpProps {
   email: string;
@@ -15,7 +13,16 @@ export const useAuth = () => {
   /* <----- auth user -----> */
   const queryClient = useQueryClient()
 
-  const queryCurrentAuthUser = useQuery(USER_AUTH, () => Auth.currentAuthenticatedUser({ bypassCache: true }))
+  const queryCurrentAuthUser = useQuery(USER_AUTH, () => Auth.currentAuthenticatedUser({ bypassCache: true }), {
+    onSuccess: () => {
+      queryClient.refetchQueries(USER_DATA)
+    },
+
+    onError: (e) => {
+      console.log(e)
+      console.log('error')
+    }
+  })
 
   /* <----- sign up user -----> */
   const signUpMutaton = useMutation(({ email, password }: signUpProps) => Auth.signUp({ username: email, password: password }))
