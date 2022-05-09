@@ -1,20 +1,21 @@
 import React from 'react'
 import Root from './src/navigation'
 import BottomModalState from './src/context/BottomModal/BottomModalState'
-import { NhostClient, NhostReactProvider } from '@nhost/react'
-import { BACKEND_URL } from './src/constant'
+import { Amplify } from 'aws-amplify'
+import awsconfig from './src/aws-exports'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
-const nhost = new NhostClient({
-  backendUrl: BACKEND_URL
-})
+Amplify.configure(awsconfig)
+
+const queryClient = new QueryClient()
 
 const App = () => {
   return (
-    <NhostReactProvider nhost={nhost}>
+    <QueryClientProvider client={queryClient}>
       <BottomModalState>
         <Root />
       </BottomModalState>
-    </NhostReactProvider>
+    </QueryClientProvider>
   )
 }
 

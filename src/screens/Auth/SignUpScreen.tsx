@@ -1,22 +1,30 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from '../../constant'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SignUpScreenNavigationProps } from '../../types/NavigationProps'
+import { useAuth } from '../../hooks/useAuth'
 
 //  components
 import Button from '../../components/common/Button'
 import IconFacebookRounded from '../../components/Svg/IconFacebookRounded'
 import IconGoogle from '../../components/Svg/IconGoogle'
 import Input from '../../components/common/Input'
+import LoadingModal from '../../components/common/LoadingModal'
+import NotificationModal from '../../components/common/NotificationModal'
 
 interface formData {
   username: string,
   email: string,
   password: string
+}
+
+interface modalProps {
+  show: boolean,
+  message: string
 }
 
 const SignUpScreen = () => {
@@ -26,7 +34,7 @@ const SignUpScreen = () => {
 
   const isDarkMode = useTheme().dark
 
-  const cleanUserNameField = () => resetField('username')
+  const { signUp, signUpIsLoading } = useAuth()
 
   const cleanEmailField = () => resetField('email')
 
@@ -34,8 +42,27 @@ const SignUpScreen = () => {
 
   const goToSigInScreen = () => navigation.navigate('SignInScreen', { email: '' })
 
-  const onPressSignIn = () => {
-    console.log('press')
+  const [modal, setModal] = useState<modalProps>({ show: false, message: '' })
+
+  const onRegisterPressed = async (data: formData) => {
+    const { email, password } = data
+
+    if (signUpIsLoading) return
+
+    signUp({ email, password }, {
+      onSuccess: (result) => {
+        console.log(result)
+        navigation.navigate('SignInScreen', { email })
+      },
+
+      onError: (error) => {
+        console.log(error)
+        setModal({
+          message: 'Oh no! Ya existe una cuenta con ese correo electronico',
+          show: true
+        })
+      }
+    })
   }
 
   return (
@@ -43,23 +70,12 @@ const SignUpScreen = () => {
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           <Input
-            name='username'
-            control={control}
-            placeholder='Nombre de usuario'
-            resetField={cleanUserNameField}
-            rules={{
-              required: { value: true, message: 'Ingresa tu nombre de usuario' }
-            }}
-            containerStyles={styles.input}
-          />
-
-          <Input
             name='email'
             control={control}
             placeholder='Correo'
             resetField={cleanEmailField}
             rules={{
-              required: { value: true, message: 'Ingresa tu correo electronico' },
+              required: { value: true, message: '¡Te faltó algo! No te olvides de agregar tu correo electrónico.' },
               validate: (value: string) => EMAIL_REGEX.test(value.trim()) || 'Este correo electronico no parece ser válido'
             }}
             containerStyles={styles.input}
@@ -72,14 +88,15 @@ const SignUpScreen = () => {
             resetField={cleanPasswordField}
             secureTextEntry
             rules={{
-              required: { value: true, message: 'Ingresa tu contraseña' }
+              required: { value: true, message: 'Ingresa tu contraseña' },
+              minLength: { value: 8, message: 'La contraseña es demasiado corta. Debe tener 6 caracteres o más.' }
             }}
             containerStyles={styles.passwordInput}
           />
 
           <Button
-            text='Continuar'
-            onPress={handleSubmit(onPressSignIn)}
+            text='Registrar'
+            onPress={handleSubmit(onRegisterPressed)}
           />
 
           <Text style={[styles.or, { color: isDarkMode ? '#fff' : '#000' }]}>O</Text>
@@ -102,6 +119,9 @@ const SignUpScreen = () => {
           <TouchableOpacity activeOpacity={0.7} onPress={() => goToSigInScreen()}>
             <Text style={[styles.footerText, styles.signIngScreen, { color: isDarkMode ? '#fff' : '#000' }]}>Inicia sesión</Text>
           </TouchableOpacity>
+
+          {signUpIsLoading && <LoadingModal isVisible={signUpIsLoading} />}
+          {modal.show && <NotificationModal isVisible={modal.show} isError message={modal.message} onCloseModal={() => setModal({ show: false, message: '' })} />}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
