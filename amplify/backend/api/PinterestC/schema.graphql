@@ -1,8 +1,18 @@
+type Board @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Pins: [Pin] @hasMany(indexName: "byBoard", fields: ["id"])
+  name: String!
+  userID: ID! @index(name: "byUser")
+  isPrivate: Boolean
+}
+
 type Pin @model @auth(rules: [{allow: public}]) {
   id: ID!
   image: String!
   title: String
   userID: ID! @index(name: "byUser")
+  boardID: ID! @index(name: "byBoard")
+  isPrivate: Boolean
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -12,4 +22,7 @@ type User @model @auth(rules: [{allow: public}]) {
   username: String
   image: String
   Pins: [Pin] @hasMany(indexName: "byUser", fields: ["id"])
-} 
+  interests: [String!]
+  Boards: [Board] @hasMany(indexName: "byUser", fields: ["id"])
+}
+ 
