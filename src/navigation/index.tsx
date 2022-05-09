@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useColorScheme, StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -10,9 +10,9 @@ import { useAuth } from '../hooks/useAuth'
 const Navigation = () => {
   const scheme = useColorScheme()
 
-  const { isAuthUser } = useAuth()
+  const { authUser } = useAuth()
 
-  console.log(isAuthUser)
+  console.log(authUser.isLoading)
 
   return (
     <SafeAreaProvider>
@@ -21,7 +21,7 @@ const Navigation = () => {
         barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
       />
       <NavigationContainer theme={scheme === 'dark' ? Dark : Default}>
-        {isAuthUser ? <MainStack /> : <AuthStack />}
+        {authUser.isAuth ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     </SafeAreaProvider>
   )
