@@ -12,7 +12,7 @@ const Navigation = () => {
 
   const { authUser } = useAuth()
 
-  console.log(authUser.isLoading)
+  console.log('[authUser is Loading]: ', authUser.isLoading)
 
   return (
     <SafeAreaProvider>

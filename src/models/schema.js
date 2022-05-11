@@ -10,20 +10,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Pins": {
-                    "name": "Pins",
-                    "isArray": true,
-                    "type": {
-                        "model": "Pin"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "boardID"
-                    }
-                },
                 "name": {
                     "name": "name",
                     "isArray": false,
@@ -44,6 +30,20 @@ export const schema = {
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
+                },
+                "Pins": {
+                    "name": "Pins",
+                    "isArray": true,
+                    "type": {
+                        "model": "Pin"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "boardID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -106,13 +106,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "title": {
                     "name": "title",
                     "isArray": false,
@@ -120,10 +113,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "userID": {
-                    "name": "userID",
+                "image": {
+                    "name": "image",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -134,11 +127,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "isPrivate": {
-                    "name": "isPrivate",
+                "boardName": {
+                    "name": "boardName",
                     "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
+                    "type": "String",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -164,15 +157,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
                 },
                 {
                     "type": "key",
@@ -239,25 +223,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Pins": {
-                    "name": "Pins",
-                    "isArray": true,
-                    "type": {
-                        "model": "Pin"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
-                    }
-                },
                 "interests": {
                     "name": "interests",
                     "isArray": true,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
                 },
@@ -320,5 +290,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "d49563d66c6fa29dd2732d0f28ae51f7"
+    "version": "6df6580cd03a845faac3dfb0faf09459"
 };

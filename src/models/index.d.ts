@@ -18,10 +18,10 @@ type UserMetaData = {
 
 export declare class Board {
   readonly id: string;
-  readonly Pins?: (Pin | null)[] | null;
   readonly name: string;
   readonly userID: string;
   readonly isPrivate?: boolean | null;
+  readonly Pins?: (Pin | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Board, BoardMetaData>);
@@ -30,11 +30,10 @@ export declare class Board {
 
 export declare class Pin {
   readonly id: string;
-  readonly image: string;
   readonly title?: string | null;
-  readonly userID: string;
+  readonly image: string;
   readonly boardID: string;
-  readonly isPrivate?: boolean | null;
+  readonly boardName: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Pin, PinMetaData>);
@@ -47,8 +46,7 @@ export declare class User {
   readonly name?: string | null;
   readonly username?: string | null;
   readonly image?: string | null;
-  readonly Pins?: (Pin | null)[] | null;
-  readonly interests?: string[] | null;
+  readonly interests?: (string | null)[] | null;
   readonly Boards?: (Board | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
