@@ -1,5 +1,101 @@
 export const schema = {
     "models": {
+        "Board": {
+            "name": "Board",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isPrivate": {
+                    "name": "isPrivate",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Pins": {
+                    "name": "Pins",
+                    "isArray": true,
+                    "type": {
+                        "model": "Pin"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "boardID"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Boards",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Pin": {
             "name": "Pin",
             "fields": {
@@ -10,13 +106,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "title": {
                     "name": "title",
                     "isArray": false,
@@ -24,10 +113,24 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "userID": {
-                    "name": "userID",
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "boardID": {
+                    "name": "boardID",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "boardName": {
+                    "name": "boardName",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -58,9 +161,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUser",
+                        "name": "byBoard",
                         "fields": [
-                            "userID"
+                            "boardID"
                         ]
                     }
                 },
@@ -120,11 +223,19 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Pins": {
-                    "name": "Pins",
+                "interests": {
+                    "name": "interests",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "Boards": {
+                    "name": "Boards",
                     "isArray": true,
                     "type": {
-                        "model": "Pin"
+                        "model": "Board"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -179,5 +290,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "97b707de11dadda99a0808affeceead5"
+    "version": "6df6580cd03a845faac3dfb0faf09459"
 };

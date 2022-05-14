@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { Component, useContext } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '@react-navigation/native'
 import BottomModalContext from '../../context/BottomModal/BottomModalContext'
 import { HomeScreenProps } from '../../types/NavigationProps'
+import { usePin } from '../../hooks/usePin'
 
 //  components
 import MasonryList from '../../components/common/MasonryList'
@@ -16,6 +17,10 @@ const Home = ({ navigation } :HomeScreenProps) => {
   const theme = useTheme()
 
   const { visible, setVisible } = useContext(BottomModalContext)
+
+  const { Pins } = usePin()
+
+  console.log(Pins.data)
 
   const toggleModal = () => {
     setVisible(!visible)
