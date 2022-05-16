@@ -1,11 +1,11 @@
 import React from 'react'
 import Root from './src/navigation'
 import BottomModalState from './src/context/BottomModal/BottomModalState'
-import { Amplify } from 'aws-amplify'
-import awsconfig from './src/aws-exports'
+// import { Amplify } from 'aws-amplify'
+// import awsconfig from './src/aws-exports'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-Amplify.configure(awsconfig)
+// Amplify.configure(awsconfig)
 
 const queryClient = new QueryClient()
 
