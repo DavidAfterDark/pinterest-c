@@ -10,7 +10,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.3",
+    "@nhost/nhost-js": "^1.1.11",
+    "@nhost/react": "^0.7.5",
+    "@react-native-async-storage/async-storage": "^1.17.4",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/netinfo": "^8.3.0",
     "@react-native-picker/picker": "^2.4.1",
