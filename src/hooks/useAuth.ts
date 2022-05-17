@@ -1,6 +1,6 @@
-import { Auth } from 'aws-amplify'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { USER_AUTH, USER_DATA } from '../constant'
+import { useMutation, useQueryClient } from 'react-query'
+import { USER_AUTH } from '../constant'
+import { useNhostClient, useAuthenticationStatus } from '@nhost/react'
 
 interface signUpProps {
   email: string;
@@ -10,41 +10,44 @@ interface signUpProps {
 interface signInProps extends signUpProps {}
 
 export const useAuth = () => {
+  const nhost = useNhostClient()
+
+  const { isLoading, isError, isAuthenticated } = useAuthenticationStatus()
+
   /* <----- auth user -----> */
   const queryClient = useQueryClient()
 
-  const queryCurrentAuthUser = useQuery(USER_AUTH, () => Auth.currentAuthenticatedUser({ bypassCache: true }), {
-    onSuccess: () => {
-      queryClient.refetchQueries(USER_DATA)
-    },
-
-    onError: (e) => {
-      console.log(e)
-      console.log('error')
-    }
-  })
-
   /* <----- sign up user -----> */
-  const signUpMutaton = useMutation(({ email, password }: signUpProps) => Auth.signUp({ username: email, password: password }))
+  const signUpMutaton = useMutation(({ email, password }: signUpProps) => nhost.auth.signUp({ email, password }))
 
   /* <----- sign in user -----> */
-  const signInMutation = useMutation(({ email, password }: signInProps) => Auth.signIn({ username: email, password: password }), {
-    onSuccess: () => {
+  const signInMutation = useMutation(({ email, password }: signInProps) => nhost.auth.signIn({ email, password }), {
+    onSuccess: (data) => {
       queryClient.refetchQueries(USER_AUTH)
+
+      if (data.error) throw Error(data.error.message)
+
+      console.log(data)
+    },
+
+    onError: (error) => {
+      console.log(':( ocurrio un error')
+      console.log(error)
     }
   })
 
   /* <----- sign out -----> */
   const signOut = async () => {
-    await Auth.signOut()
+    await nhost.auth.signOut()
     queryClient.invalidateQueries(USER_AUTH)
     console.log('sign out')
   }
 
   return {
     authUser: {
-      isAuth: queryCurrentAuthUser.isSuccess,
-      isLoading: queryCurrentAuthUser.isLoading
+      isAuth: isAuthenticated,
+      isLoading: isLoading,
+      isError: isError
     },
 
     signIn: signInMutation.mutate,
