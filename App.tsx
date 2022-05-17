@@ -4,11 +4,12 @@ import BottomModalState from './src/context/BottomModal/BottomModalState'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { NhostClient, NhostReactProvider } from '@nhost/react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { BACKEND_URL } from './src/constant'
 
 const queryClient = new QueryClient()
 
 const nhost = new NhostClient({
-  backendUrl: 'https://hdprcyrkfjmxrdcwumfn.nhost.run',
+  backendUrl: BACKEND_URL,
   clientStorageType: 'react-native',
   clientStorage: AsyncStorage
 })
