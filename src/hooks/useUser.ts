@@ -1,10 +1,19 @@
 import { useQuery } from 'react-query'
-import { DataStore } from 'aws-amplify'
 import { USER_DATA } from '../constant'
-import { User } from '../models'
+import { useNhostClient } from '@nhost/react'
 
 export const useUser = () => {
-  const queryUserData = useQuery(USER_DATA, () => DataStore.query(User), {
+  const nhost = useNhostClient()
+
+  const queryUserData = useQuery(USER_DATA, () => nhost.graphql.request(`
+  query MyQuery {
+    users {
+      email
+      id
+      displayName
+    }
+  }
+  `), {
     onSuccess: (data) => {
       console.log('[queryUserData][success]', data)
     },

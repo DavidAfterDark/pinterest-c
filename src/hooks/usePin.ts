@@ -1,20 +1,26 @@
-import { useQuery, useQueryClient } from 'react-query'
-import { DataStore, Predicates, graphqlOperation, API } from 'aws-amplify'
-import { ALL_PINS, USER_BOARD } from '../constant'
-import { Pin, Board } from '../models'
-import { useUser } from './useUser'
-
-// list2.map( function (item) { res = imgs.includes(item)})
+import { useQuery } from 'react-query'
+import { ALL_PINS } from '../constant'
+import { useNhostClient } from '@nhost/react'
 
 export const usePin = () => {
-  const { userData } = useUser()
+  const nhost = useNhostClient()
 
-  const queryClient = useQueryClient()
-
-  const queryAllPins = useQuery(USER_BOARD, () => DataStore.query(Pin))
-  // queryClient.setQueryData()
+  const queryAllPins = useQuery(ALL_PINS, () => nhost.graphql.request(`
+  query MyQuery {
+    pins {
+      id
+      image_url
+      description
+    }
+  }
+  `), {
+    onSuccess: (data) => {
+      console.log('data query pins')
+      console.log(data)
+    }
+  })
 
   return {
-    Pins: queryAllPins
+    pins: queryAllPins
   }
 }

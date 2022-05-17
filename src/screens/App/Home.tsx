@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '@react-navigation/native'
@@ -10,7 +10,6 @@ import { usePin } from '../../hooks/usePin'
 import MasonryList from '../../components/common/MasonryList'
 
 //  dummy data
-import pins from '../../../assets/dummy-data/pins'
 import TabBarModal from '../../components/common/TabBarModal'
 
 const Home = ({ navigation } :HomeScreenProps) => {
@@ -18,9 +17,9 @@ const Home = ({ navigation } :HomeScreenProps) => {
 
   const { visible, setVisible } = useContext(BottomModalContext)
 
-  const { Pins } = usePin()
+  const { pins } = usePin()
 
-  console.log(Pins.data)
+  console.log(pins.data)
 
   const toggleModal = () => {
     setVisible(!visible)
@@ -33,7 +32,7 @@ const Home = ({ navigation } :HomeScreenProps) => {
 
   return (
     <SafeAreaView>
-        <MasonryList data={pins} favoritesButton />
+        {/* <MasonryList data={pins} favoritesButton /> */}
 
         <TabBarModal visible={visible} toggleModal={toggleModal}>
           <Text style={[styles.title, { color: theme.dark ? '#fff' : '#000' }]} >Crear</Text>
