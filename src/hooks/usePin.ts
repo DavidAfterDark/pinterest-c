@@ -8,9 +8,9 @@ export const usePin = () => {
   const queryAllPins = useQuery(ALL_PINS, () => nhost.graphql.request(`
   query MyQuery {
     pins {
-      id
-      image_url
-      description
+      user {
+        id
+      }
     }
   }
   `), {

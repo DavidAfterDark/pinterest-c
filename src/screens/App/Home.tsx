@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '@react-navigation/native'
@@ -15,11 +15,9 @@ import TabBarModal from '../../components/common/TabBarModal'
 const Home = ({ navigation } :HomeScreenProps) => {
   const theme = useTheme()
 
-  const { visible, setVisible } = useContext(BottomModalContext)
-
   const { pins } = usePin()
 
-  console.log(pins.data)
+  const { visible, setVisible } = useContext(BottomModalContext)
 
   const toggleModal = () => {
     setVisible(!visible)
@@ -29,6 +27,14 @@ const Home = ({ navigation } :HomeScreenProps) => {
     toggleModal()
     navigation.navigate('CreatePin')
   }
+
+  const fun = async () => {
+    console.log('>>>>>>>>>>>', pins.data)
+  }
+
+  useEffect(() => {
+    fun()
+  }, [])
 
   return (
     <SafeAreaView>

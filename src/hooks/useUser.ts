@@ -7,10 +7,10 @@ export const useUser = () => {
 
   const queryUserData = useQuery(USER_DATA, () => nhost.graphql.request(`
   query MyQuery {
-    users {
-      email
-      id
-      displayName
+    pins {
+      user {
+        id
+      }
     }
   }
   `), {
