@@ -7,7 +7,13 @@ import { NhostClient } from '@nhost/nhost-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BACKEND_URL } from './src/constant'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity
+    }
+  }
+})
 
 const nhost = new NhostClient({
   backendUrl: BACKEND_URL,

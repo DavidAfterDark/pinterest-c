@@ -6,6 +6,7 @@ import { Dark, Default } from '../theme'
 import AuthStack from './AuthStack'
 import MainStack from './MainStack'
 import { useAuth } from '../hooks/useAuth'
+import LoadingScreen from '../screens/Auth/LoadingScreen'
 
 const Navigation = () => {
   const scheme = useColorScheme()
@@ -13,6 +14,8 @@ const Navigation = () => {
   const { authUser } = useAuth()
 
   console.log('[authUser is Loading]: ', authUser.isLoading)
+
+  if (authUser.isLoading) return <LoadingScreen />
 
   return (
     <SafeAreaProvider>

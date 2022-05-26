@@ -10,7 +10,7 @@ import IconHeart from '../../Svg/IconHeart'
 interface PinProps {
   pin: {
     id: string,
-    image: string,
+    image_url: string, // eslint-disable-line
     title: string,
   },
   onPressFavoriteButton?: PressableProps['onPress'],
@@ -33,10 +33,10 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton, pinStyles, pinTextSt
   const navigation = useNavigation<PinScrenNavigationProps>()
 
   useEffect(() => {
-    if (pin.image) {
-      Image.getSize(pin.image, (width, height) => setRatio(width / height))
+    if (pin.image_url) {
+      Image.getSize(pin.image_url, (width, height) => setRatio(width / height))
     }
-  }, [pin.image])
+  }, [pin.image_url])
 
   const goToPinScreen = () => {
     if (disableTouch) return
@@ -48,7 +48,7 @@ const Pin = ({ pin, favoritesButton, onPressFavoriteButton, pinStyles, pinTextSt
       <View style={styles.imageContainer}>
         {loadingImage && <ActivityIndicator style={styles.activityIndicator} size={35} />}
         <FastImage
-          source={{ uri: pin.image }}
+          source={{ uri: pin.image_url }}
           style={[styles.image, { aspectRatio: ratio }]}
           onLoadStart={() => setLoadingImage(true)}
           onLoad={() => setLoadingImage(false)}

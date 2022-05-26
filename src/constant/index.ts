@@ -2,6 +2,7 @@
 export const USER_AUTH = 'USER_AUTH'
 export const USER_DATA = 'USER_DATA'
 export const ALL_PINS = 'ALL_PINS'
+export const PIN = 'PIN'
 export const USER_BOARD = 'USER_BOARD'
 
 //  regexs
