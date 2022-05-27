@@ -1,24 +1,16 @@
 import { useQuery } from 'react-query'
 import { ALL_PINS, PIN } from '../constant'
-import { API_ALL_PINS } from '../api/index'
+import { API_ALL_PINS, API_PINS_BY_ID } from '../api'
 
-export const usePin = () => {
-  const queryAllPins = useQuery(ALL_PINS, () => fetch(API_ALL_PINS).then(res => res.json()))
+export const usePin = (id?: string) => {
+  //  query all pins
+  const allPins = useQuery(ALL_PINS, () => fetch(API_ALL_PINS).then(res => res.json()))
 
-  const pinByID = (id: string) => {
-    const form = new FormData()
-
-    form.append('id', '0f948061-07c4-41a5-9790-5827dff9f767')
-
-    fetch('https://viqxpumkyjqduxkhcsju.nhost.run/api/rest/pin/id', {
-      method: 'POST',
-      body: form
-    })
-      .then(res => res.json().then(res => console.log(res, '<<<<2')))
-  }
+  //  query pins by id
+  const pinByID = useQuery([PIN, id], () => fetch(`${API_PINS_BY_ID}/${id}`).then(res => res.json()))
 
   return {
-    allPins: queryAllPins,
+    allPins,
     pinByID
   }
 }
