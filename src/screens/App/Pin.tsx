@@ -1,42 +1,57 @@
-import { View, Text, StyleSheet, Image, ScrollView, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, StatusBar, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme, useRoute } from '@react-navigation/native'
 import { PinScreenRouteProps } from '../../types/NavigationProps'
 import { usePin } from '../../hooks/usePin'
-import { useNhostClient } from '@nhost/react'
 
-//  dummy data
+interface pinProps {
+  imageUrl: string, // eslint-disable-line
+  title: string
+}
 
 const Pin = () => {
   const route = useRoute<PinScreenRouteProps>()
 
-  const { pinByID } = usePin(useNhostClient())
-
-  const pinID = route?.params?.id
-  const res = pinByID(pinID)
-  console.log(res)
-
-  // const pin = pins.data?.data.find((pin) => pin.id === pinID)
-
   const theme = useTheme()
 
+  const pinID = route?.params?.id
+
+  const { pinByID } = usePin(pinID)
+
+  const [pin, setPin] = useState<pinProps>()
   const [ratio, setRatio] = useState<number>(1)
 
-  // useEffect(() => {
-  //   Image.getSize(pin.image_url, (width, height) => setRatio(width / height))
-  // }, [])
+  useEffect(() => {
+    if (!pinByID.isLoading && pinByID.data) {
+      setPin(pinByID.data.pins_by_pk)
+
+      console.log(pin)
+
+      if (pin?.image_url) {
+        Image.getSize(pin.image_url, (width, height) => setRatio(width / height))
+      }
+    }
+  }, [pinByID.isLoading, pinByID.data])
+
+  if (pinByID.isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size={38} color='red' />
+      </View>
+    )
+  }
 
   return (
     <>
       <StatusBar backgroundColor='black' barStyle='light-content' />
       <SafeAreaView style={styles.scrollView}>
         <ScrollView>
-          {/* <View style={[styles.cardContainer, { backgroundColor: theme.dark ? '#292827' : 'white' }]}>
-            <FastImage source={{ uri: pin.image }} style={[styles.image, { aspectRatio: ratio }]} />
-            <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>
-          </View> */}
+          <View style={[styles.cardContainer, { backgroundColor: theme.dark ? '#292827' : 'white' }]}>
+            {pin?.image_url && <FastImage source={{ uri: pin.image_url }} style={[styles.image, { aspectRatio: ratio }]} />}
+            {pin?.title && <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </>

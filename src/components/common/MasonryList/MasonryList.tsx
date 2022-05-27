@@ -5,7 +5,7 @@ import React from 'react'
 import Pin from './Pin'
 
 interface MasonryListProps {
-  data: { id: string, image_url: string, title: string }[], // eslint-disable-line
+  data: { id: string, imageUrl: string, title: string }[], // eslint-disable-line
   favoritesButton?: boolean,
   onPressFavoriteButton?: () => void,
   numColumns?: number,

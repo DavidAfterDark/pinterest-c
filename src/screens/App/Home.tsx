@@ -8,16 +8,12 @@ import { usePin } from '../../hooks/usePin'
 
 //  components
 import MasonryList from '../../components/common/MasonryList'
-
-//  dummy data
 import TabBarModal from '../../components/common/TabBarModal'
 
 const Home = ({ navigation } :HomeScreenProps) => {
   const theme = useTheme()
 
   const { allPins } = usePin()
-
-  console.log('🚀 ~ file: Home.tsx ~ line 19 ~ Home ~ pins', allPins)
 
   const { visible, setVisible } = useContext(BottomModalContext)
 
@@ -32,7 +28,7 @@ const Home = ({ navigation } :HomeScreenProps) => {
 
   return (
     <SafeAreaView>
-        {!allPins.isLoading && allPins.data?.data && <MasonryList data={allPins.data?.data?.pins} favoritesButton />}
+        {!allPins.isLoading && allPins?.data && <MasonryList data={allPins.data?.pins} favoritesButton />}
 
         <TabBarModal visible={visible} toggleModal={toggleModal}>
           <Text style={[styles.title, { color: theme.dark ? '#fff' : '#000' }]} >Crear</Text>
