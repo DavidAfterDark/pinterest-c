@@ -9,6 +9,7 @@ import { usePin } from '../../hooks/usePin'
 //  components
 import MasonryList from '../../components/common/MasonryList'
 import TabBarModal from '../../components/common/TabBarModal'
+import BoardList from '../../components/Home/BoardList'
 
 const Home = ({ navigation } :HomeScreenProps) => {
   const theme = useTheme()
@@ -27,8 +28,9 @@ const Home = ({ navigation } :HomeScreenProps) => {
   }
 
   return (
-    <SafeAreaView>
-        {!allPins.isLoading && allPins?.data && <MasonryList data={allPins.data?.pins} favoritesButton />}
+    <SafeAreaView style={{ backgroundColor: 'red' }}>
+      <BoardList />
+      {!allPins.isLoading && allPins?.data && <MasonryList data={allPins.data?.pins} favoritesButton />}
 
         <TabBarModal visible={visible} toggleModal={toggleModal}>
           <Text style={[styles.title, { color: theme.dark ? '#fff' : '#000' }]} >Crear</Text>
