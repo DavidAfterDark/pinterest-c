@@ -29,8 +29,8 @@ const Pin = () => {
 
       console.log(pin)
 
-      if (pin?.image_url) {
-        Image.getSize(pin.image_url, (width, height) => setRatio(width / height))
+      if (pin?.imageUrl) {
+        Image.getSize(pin.imageUrl, (width, height) => setRatio(width / height))
       }
     }
   }, [pinByID.isLoading, pinByID.data])
@@ -49,7 +49,7 @@ const Pin = () => {
       <SafeAreaView style={styles.scrollView}>
         <ScrollView>
           <View style={[styles.cardContainer, { backgroundColor: theme.dark ? '#292827' : 'white' }]}>
-            {pin?.image_url && <FastImage source={{ uri: pin.image_url }} style={[styles.image, { aspectRatio: ratio }]} />}
+            {pin?.imageUrl && <FastImage source={{ uri: pin.imageUrl }} style={[styles.image, { aspectRatio: ratio }]} />}
             {pin?.title && <Text style={[styles.title, { color: theme.colors.text }]}>{pin.title}</Text>}
           </View>
         </ScrollView>
