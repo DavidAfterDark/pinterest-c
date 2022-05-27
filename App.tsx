@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { NhostReactProvider } from '@nhost/react'
 import { NhostClient } from '@nhost/nhost-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { BACKEND_URL } from './src/constant'
+import { BACKEND_URL } from './src/api'
 
 const queryClient = new QueryClient({
   defaultOptions: {
