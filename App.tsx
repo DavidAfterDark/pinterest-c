@@ -2,11 +2,18 @@ import React from 'react'
 import Root from './src/navigation'
 import BottomModalState from './src/context/BottomModal/BottomModalState'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { NhostClient, NhostReactProvider } from '@nhost/react'
+import { NhostReactProvider } from '@nhost/react'
+import { NhostClient } from '@nhost/nhost-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { BACKEND_URL } from './src/constant'
+import { BACKEND_URL } from './src/api'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity
+    }
+  }
+})
 
 const nhost = new NhostClient({
   backendUrl: BACKEND_URL,
@@ -19,7 +26,7 @@ const App = () => {
     <NhostReactProvider nhost={nhost}>
       <QueryClientProvider client={queryClient}>
         <BottomModalState>
-          <Root />
+            <Root />
         </BottomModalState>
       </QueryClientProvider>
     </NhostReactProvider>

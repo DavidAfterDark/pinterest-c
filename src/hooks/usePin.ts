@@ -1,26 +1,16 @@
 import { useQuery } from 'react-query'
-import { ALL_PINS } from '../constant'
-import { useNhostClient } from '@nhost/react'
+import { ALL_PINS, PIN } from '../constant'
+import { API_ALL_PINS, API_PINS_BY_ID } from '../api'
 
-export const usePin = () => {
-  const nhost = useNhostClient()
+export const usePin = (id?: string) => {
+  //  query all pins
+  const allPins = useQuery(ALL_PINS, () => fetch(API_ALL_PINS).then(res => res.json()))
 
-  const queryAllPins = useQuery(ALL_PINS, () => nhost.graphql.request(`
-  query MyQuery {
-    pins {
-      id
-      image_url
-      description
-    }
-  }
-  `), {
-    onSuccess: (data) => {
-      console.log('data query pins')
-      console.log(data)
-    }
-  })
+  //  query pins by id
+  const pinByID = useQuery([PIN, id], () => fetch(`${API_PINS_BY_ID}/${id}`).then(res => res.json()))
 
   return {
-    pins: queryAllPins
+    allPins,
+    pinByID
   }
 }
