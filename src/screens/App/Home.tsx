@@ -28,9 +28,9 @@ const Home = ({ navigation } :HomeScreenProps) => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'red' }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <BoardList />
-      {!allPins.isLoading && allPins?.data && <MasonryList data={allPins.data?.pins} favoritesButton />}
+      {/* {!allPins.isLoading && allPins?.data && <MasonryList data={allPins.data?.pins} favoritesButton />} */}
 
         <TabBarModal visible={visible} toggleModal={toggleModal}>
           <Text style={[styles.title, { color: theme.dark ? '#fff' : '#000' }]} >Crear</Text>
